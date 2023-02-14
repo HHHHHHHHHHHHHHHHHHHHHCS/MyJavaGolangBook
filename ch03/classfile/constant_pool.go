@@ -11,7 +11,7 @@ func readConstantPool(reader *ClassReader) ConstantPool {
 	cp := make([]ConstantInfo, cpCount)
 	// 索引从1开始
 	for i := 1; i < cpCount; i++ {
-		info = readConstantInfo(reader, cp)
+		info := readConstantInfo(reader, cp)
 		cp[i] = info
 		switch info.(type) {
 		case *ConstantLongInfo, *ConstantDoubleInfo:
