@@ -1,16 +1,15 @@
 package main
 
-import (
-	"MyJavaGolangBook/ch03/classfile"
-	"MyJavaGolangBook/ch03/classpath"
-	"fmt"
-	"strings"
-)
+import "fmt"
+import "strings"
+import "MyJavaGolangBook/ch03/classfile"
+import "MyJavaGolangBook/ch03/classpath"
 
 func main() {
 	cmd := parseCmd()
+
 	if cmd.versionFlag {
-		fmt.Println("version 0.0.3")
+		fmt.Println("version 0.0.1")
 	} else if cmd.helpFlag || cmd.class == "" {
 		printUsage()
 	} else {
@@ -26,31 +25,33 @@ func startJVM(cmd *Cmd) {
 	printClassInfo(cf)
 }
 
-func loadClass(className string, cp *classpath.ClassPath) *classfile.ClassFile {
+func loadClass(className string, cp *classpath.Classpath) *classfile.ClassFile {
 	classData, _, err := cp.ReadClass(className)
 	if err != nil {
 		panic(err)
 	}
+
 	cf, err := classfile.Parse(classData)
 	if err != nil {
 		panic(err)
 	}
+
 	return cf
 }
 
 func printClassInfo(cf *classfile.ClassFile) {
 	fmt.Printf("version: %v.%v\n", cf.MajorVersion(), cf.MinorVersion())
 	fmt.Printf("constants count: %v\n", len(cf.ConstantPool()))
-	fmt.Printf("acess flags: 0x%x\n", cf.AccessFlags())
+	fmt.Printf("access flags: 0x%x\n", cf.AccessFlags())
 	fmt.Printf("this class: %v\n", cf.ClassName())
 	fmt.Printf("super class: %v\n", cf.SuperClassName())
 	fmt.Printf("interfaces: %v\n", cf.InterfaceNames())
 	fmt.Printf("fields count: %v\n", len(cf.Fields()))
 	for _, f := range cf.Fields() {
-		fmt.Printf("\t%s\n", f.Name())
+		fmt.Printf("  %s\n", f.Name())
 	}
 	fmt.Printf("methods count: %v\n", len(cf.Methods()))
 	for _, m := range cf.Methods() {
-		fmt.Printf("\t%s\n", m.Name())
+		fmt.Printf("  %s\n", m.Name())
 	}
 }

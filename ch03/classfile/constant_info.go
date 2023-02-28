@@ -1,6 +1,6 @@
 package classfile
 
-// tag常量值定义
+// Constant pool tags
 const (
 	CONSTANT_Class              = 7
 	CONSTANT_Fieldref           = 9
@@ -18,6 +18,12 @@ const (
 	CONSTANT_InvokeDynamic      = 18
 )
 
+/*
+cp_info {
+    u1 tag;
+    u1 info[];
+}
+*/
 type ConstantInfo interface {
 	readInfo(reader *ClassReader)
 }
@@ -29,6 +35,7 @@ func readConstantInfo(reader *ClassReader, cp ConstantPool) ConstantInfo {
 	return c
 }
 
+// todo ugly code
 func newConstantInfo(tag uint8, cp ConstantPool) ConstantInfo {
 	switch tag {
 	case CONSTANT_Integer:
@@ -46,11 +53,11 @@ func newConstantInfo(tag uint8, cp ConstantPool) ConstantInfo {
 	case CONSTANT_Class:
 		return &ConstantClassInfo{cp: cp}
 	case CONSTANT_Fieldref:
-		return &ConstantFieldRefInfo{ConstantMemberRefInfo{cp: cp}}
+		return &ConstantFieldrefInfo{ConstantMemberrefInfo{cp: cp}}
 	case CONSTANT_Methodref:
-		return &ConstantMethodRefInfo{ConstantMemberRefInfo{cp: cp}}
+		return &ConstantMethodrefInfo{ConstantMemberrefInfo{cp: cp}}
 	case CONSTANT_InterfaceMethodref:
-		return &ConstantInterfaceMethodRefInfo{ConstantMemberRefInfo{cp: cp}}
+		return &ConstantInterfaceMethodrefInfo{ConstantMemberrefInfo{cp: cp}}
 	case CONSTANT_NameAndType:
 		return &ConstantNameAndTypeInfo{}
 	case CONSTANT_MethodType:
