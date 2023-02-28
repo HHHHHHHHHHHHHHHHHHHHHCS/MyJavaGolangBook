@@ -6,14 +6,14 @@ type ClassFile struct {
 	//magic			uint32
 	minorVersion uint16
 	majorVersion uint16
-	constantPool CostantPool
+	constantPool ConstantPool
 	accessFlags  uint16
 	thisClass    uint16
 	superClass   uint16
 	interfaces   []uint16
 	fields       []*MemberInfo
 	methods      []*MemberInfo
-	attributes   []AttributesInfo
+	attributes   []AttributeInfo
 }
 
 func Parse(classData []byte) (cf *ClassFile, err error) {
