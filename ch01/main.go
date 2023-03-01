@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// -version
 func main() {
 	cmd := parseCmd()
 	if cmd.versionFlag {

@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// -Xjre "D:\Android Studio\jre\jre" java.lang.Object
 func main() {
 	cmd := parseCmd()
 	if cmd.versionFlag {

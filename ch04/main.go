@@ -2,15 +2,15 @@ package main
 
 import "fmt"
 import "strings"
-import "MyJavaGolangBook/ch03/classfile"
-import "MyJavaGolangBook/ch03/classpath"
+import "MyJavaGolangBook/ch04/classfile"
+import "MyJavaGolangBook/ch04/classpath"
 
 // -Xjre "D:\Android Studio\jre\jre" java.lang.String
 func main() {
 	cmd := parseCmd()
 
 	if cmd.versionFlag {
-		fmt.Println("version 0.0.3")
+		fmt.Println("version 0.0.4")
 	} else if cmd.helpFlag || cmd.class == "" {
 		printUsage()
 	} else {
