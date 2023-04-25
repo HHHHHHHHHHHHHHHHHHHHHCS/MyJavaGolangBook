@@ -37,3 +37,19 @@ func (self *BytecodeReader) ReadInt32() int32 {
 	byte4 := int32(self.ReadUint8())
 	return (byte1 << 24) | (byte2 << 16) | (byte3 << 8) | (byte4)
 }
+
+// 在操作码后面加 0~3的padding 保证在地址是4的倍数
+func (self *BytecodeReader) SkipPadding() {
+	for self.pc%4 != 0 {
+		self.ReadUint8()
+	}
+}
+
+// 用于读取多个
+func (self *BytecodeReader) ReadInt32s(n int32) []int32 {
+	ints := make([]int32, n)
+	for i := range ints {
+		ints[i] = self.ReadInt32()
+	}
+	return ints
+}
