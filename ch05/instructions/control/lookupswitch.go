@@ -19,7 +19,7 @@ func (self *LOOKUP_SWITCH) FetchOperands(reader *base.BytecodeReader) {
 }
 
 func (self *LOOKUP_SWITCH) Execute(frame *rtda.Frame) {
-	// 为什么是*2  一个是key  一个是对应的value偏移
+	// 为什么是*2?  一个是key  一个是对应的value偏移
 	key := frame.OperandStack().PopInt()
 	for i := int32(0); i < self.npairs*2; i += 2 {
 
