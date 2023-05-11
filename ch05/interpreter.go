@@ -41,6 +41,11 @@ func loop(thread *rtda.Thread, bytecode []byte) {
 		//decode
 		reader.Reset(bytecode, pc)
 		opcode := reader.ReadUint8()
+		// 暂时还没有做static 178 B2
+		if opcode == 178 || opcode == 182 {
+			frame.SetNextPC(reader.PC())
+			continue
+		}
 		inst := instructions.NewInstruction(opcode)
 		inst.FetchOperands(reader)
 		frame.SetNextPC(reader.PC())

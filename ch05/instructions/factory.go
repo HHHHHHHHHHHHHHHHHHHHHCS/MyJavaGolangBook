@@ -1,10 +1,9 @@
 package instructions
 
 import (
+	"MyJavaGolangBook/ch05/instructions/base"
 	"fmt"
 )
-
-import "MyJavaGolangBook/ch05/instructions/base"
 import . "MyJavaGolangBook/ch05/instructions/comparisons"
 import . "MyJavaGolangBook/ch05/instructions/constants"
 import . "MyJavaGolangBook/ch05/instructions/control"
