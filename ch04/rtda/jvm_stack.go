@@ -14,7 +14,7 @@ func newStack(maxSize uint) *Stack {
 
 func (self *Stack) push(frame *Frame) {
 	if self.size >= self.maxSize {
-		panic("jva.lang.StackOverflowError")
+		panic("java.lang.StackOverflowError")
 	}
 
 	if self._top != nil {
