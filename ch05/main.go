@@ -1,18 +1,17 @@
 package main
 
 import (
-	"MyJavaGolangBook/ch02/classpath"
 	"MyJavaGolangBook/ch05/classfile"
+	"MyJavaGolangBook/ch05/classpath"
 	"fmt"
-	"strings"
 )
+import "strings"
 
-// test
 func main() {
 	cmd := parseCmd()
 
 	if cmd.versionFlag {
-		fmt.Println("version 0.0.5")
+		fmt.Println("version 0.0.1")
 	} else if cmd.helpFlag || cmd.class == "" {
 		printUsage()
 	} else {
@@ -32,7 +31,7 @@ func startJVM(cmd *Cmd) {
 	}
 }
 
-func loadClass(className string, cp *classpath.ClassPath) *classfile.ClassFile {
+func loadClass(className string, cp *classpath.Classpath) *classfile.ClassFile {
 	classData, _, err := cp.ReadClass(className)
 	if err != nil {
 		panic(err)

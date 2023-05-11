@@ -1,10 +1,9 @@
 package math
 
-import (
-	"MyJavaGolangBook/ch05/instructions/base"
-	"MyJavaGolangBook/ch05/rtda"
-)
+import "MyJavaGolangBook/ch05/instructions/base"
+import "MyJavaGolangBook/ch05/rtda"
 
+// Increment local variable by constant
 type IINC struct {
 	Index uint
 	Const int32
@@ -12,7 +11,7 @@ type IINC struct {
 
 func (self *IINC) FetchOperands(reader *base.BytecodeReader) {
 	self.Index = uint(reader.ReadUint8())
-	self.Const = int32(reader.ReadUint8())
+	self.Const = int32(reader.ReadInt8())
 }
 
 func (self *IINC) Execute(frame *rtda.Frame) {
