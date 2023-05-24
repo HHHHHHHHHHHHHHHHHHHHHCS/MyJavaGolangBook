@@ -5,7 +5,7 @@ import "strings"
 import "MyJavaGolangBook/ch03/classfile"
 import "MyJavaGolangBook/ch03/classpath"
 
-// -Xjre "D:\Android Studio\jre\jre" java.lang.String
+// -Xjre "D:\java-se-8u43-ri\jre" java.lang.String
 func main() {
 	cmd := parseCmd()
 
