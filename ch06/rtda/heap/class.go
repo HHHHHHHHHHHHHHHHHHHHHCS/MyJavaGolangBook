@@ -9,7 +9,7 @@ type Class struct {
 	name               string // this class name
 	superClassName     string
 	interfaceNames     []string
-	constantPool       *classfile.ConstantPool
+	constantPool       *ConstantPool
 	fields             []*Field
 	methods            []*Method
 	loader             *ClsssLoader
@@ -28,7 +28,7 @@ func newClass(cf *classfile.ClassFile) *Class {
 	class.interfaceNames = cf.InterfaceNames()
 	class.constantPool = newConstantPool(class, cf.ConstantPool())
 	class.fields = newFields(class, cf.Fields())
-	class.methods = newMethodSet(class, cf.Methods())
+	class.methods = newMethods(class, cf.Methods())
 	return class
 }
 
