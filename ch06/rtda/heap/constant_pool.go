@@ -53,9 +53,8 @@ func newConstantPool(class *Class, cfCP classfile.ConstantPool) *ConstantPool {
 			// todo
 		}
 	}
-}
 
-return rtCp
+	return rtCp
 }
 
 func (self *ConstantPool) GetConstant(index uint) Constant {
