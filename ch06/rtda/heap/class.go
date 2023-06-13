@@ -12,7 +12,7 @@ type Class struct {
 	constantPool       *ConstantPool
 	fields             []*Field
 	methods            []*Method
-	loader             *ClsssLoader
+	loader             *ClassLoader
 	superClass         *Class
 	interfaces         []*Class
 	instancesSlotCount uint
