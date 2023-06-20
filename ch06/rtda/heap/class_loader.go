@@ -90,3 +90,51 @@ func prepare(class *Class) {
 	calcStaticFieldSlotIds(class)
 	allocAndInitStaticVars(class)
 }
+func calcInstanceFieldSlotIds(class *Class) {
+	slotId := uint(0)
+	if class.superClass != nil {
+		slotId = class.superClass.instancesSlotCount
+	}
+
+	for _, field := range class.fields {
+		if !field.IsStatic() {
+			field.slotId = slotId
+			slotId++
+			if field.isLongOrDouble() {
+				slotId++
+			}
+		}
+	}
+
+	class.instancesSlotCount = slotId
+}
+
+func calcStaticFieldSlotIds(class *Class) {
+	slotId := uint(0)
+	for _, field := range class.fields {
+		if field.IsStatic() {
+			field.slotId = slotId
+			slotId++
+			if field.isLongOrDouble() {
+				slotId++
+			}
+		}
+	}
+
+	class.staticSlotCount = slotId
+}
+
+func (self *Field) isLongOrDouble() bool {
+	return self.descriptor == "J" || self.descriptor == "D"
+}
+
+func allocAndInitStaticVars(class *Class) {
+	class.staticVars = newSlots(class.staticSlotCount)
+	for _, field := range class.fields {
+		if field.IsStatic() && field.IsFinal() {
+			initStaticFinalVar(class, field)
+		}
+	}
+}
+
+
