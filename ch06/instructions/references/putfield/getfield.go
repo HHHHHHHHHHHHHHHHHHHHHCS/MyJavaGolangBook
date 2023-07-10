@@ -38,6 +38,6 @@ func (self *GET_FIELD) Execute(frame *rtda.Frame) {
 	case 'D':
 		stack.PushDouble(slots.GetDouble(slotId))
 	case 'L', '[':
-		stack.PushRef(slots.getRef(slotId))
+		stack.PushRef(slots.GetRef(slotId))
 	}
 }
