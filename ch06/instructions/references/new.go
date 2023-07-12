@@ -11,7 +11,7 @@ type NEW struct {
 }
 
 func (self *NEW) Execute(frame *rtda.Frame) {
-	cp := frame.Meethod().Class().ConstantPool()
+	cp := frame.Method().Class().ConstantPool()
 	classRef := cp.GetConstant(self.Index).(*heap.ClassRef)
 	class := classRef.ResolvedClass()
 

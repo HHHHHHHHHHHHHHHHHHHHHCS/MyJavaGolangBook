@@ -60,7 +60,7 @@ func parseClass(data []byte) *Class {
 
 func resolveSuperClass(class *Class) {
 	// Object是一切class的基类
-	if class.name != "java/lange/Object" {
+	if class.name != "java/lang/Object" {
 		class.superClass = class.loader.LoadClass(class.superClassName)
 	}
 }
@@ -153,7 +153,7 @@ func initStaticFinalVar(class *Class, field *Field) {
 		case "D":
 			val := cp.GetConstant(cpIndex).(float64)
 			vars.SetDouble(slotId, val)
-		case "Ljava/lange/string;":
+		case "Ljava/lang/string;":
 			panic("todo")
 		}
 	}

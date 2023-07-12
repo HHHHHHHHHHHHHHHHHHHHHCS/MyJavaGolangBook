@@ -1,4 +1,4 @@
-package putfield
+package references
 
 import (
 	"MyJavaGolangBook/ch06/instructions/base"

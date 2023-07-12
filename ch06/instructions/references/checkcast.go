@@ -1,4 +1,4 @@
-package putfield
+package references
 
 import (
 	"MyJavaGolangBook/ch06/instructions/base"
@@ -18,10 +18,10 @@ func (self *CHECK_CAST) Execute(frame *rtda.Frame) {
 		return
 	}
 
-	cp:=frame.Method().Class().ConstantPool()
+	cp := frame.Method().Class().ConstantPool()
 	classRef := cp.GetConstant(self.Index).(*heap.ClassRef)
 	class := classRef.ResolvedClass()
 	if !ref.IsInstanceOf(class) {
 		panic("java.lang.ClassCastException")
-	} 
+	}
 }

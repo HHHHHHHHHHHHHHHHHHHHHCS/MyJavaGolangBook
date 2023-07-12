@@ -1,23 +1,20 @@
 package main
 
-import "fmt"
-import "MyJavaGolangBook/ch06/classfile"
+import (
+	"MyJavaGolangBook/ch06/rtda/heap"
+	"fmt"
+)
 import "MyJavaGolangBook/ch06/instructions"
 import "MyJavaGolangBook/ch06/instructions/base"
 import "MyJavaGolangBook/ch06/rtda"
 
-func interpret(methodInfo *classfile.MemberInfo) {
-	codeAttr := methodInfo.CodeAttribute()
-	maxLocals := codeAttr.MaxLocals()
-	maxStack := codeAttr.MaxStack()
-	bytecode := codeAttr.Code()
-
+func interpret(method *heap.Method) {
 	thread := rtda.NewThread()
-	frame := thread.NewFrame(maxLocals, maxStack)
+	frame := thread.NewFrame(method)
 	thread.PushFrame(frame)
 
 	defer catchErr(frame)
-	loop(thread, bytecode)
+	loop(thread, method.Code())
 }
 
 func catchErr(frame *rtda.Frame) {
@@ -40,6 +37,11 @@ func loop(thread *rtda.Thread, bytecode []byte) {
 		reader.Reset(bytecode, pc)
 		opcode := reader.ReadUint8()
 		inst := instructions.NewInstruction(opcode)
+
+		//if inst == nil {
+		//	break
+		//}
+
 		inst.FetchOperands(reader)
 		frame.SetNextPC(reader.PC())
 
