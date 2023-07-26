@@ -4,9 +4,10 @@ import "MyJavaGolangBook/ch07/classfile"
 
 type Method struct {
 	ClassMember
-	maxStack  uint
-	maxLocals uint
-	code      []byte
+	maxStack     uint
+	maxLocals    uint
+	code         []byte
+	argSlotCount uint
 }
 
 func newMethods(class *Class, cfMethods []*classfile.MemberInfo) []*Method {
@@ -16,6 +17,7 @@ func newMethods(class *Class, cfMethods []*classfile.MemberInfo) []*Method {
 		method.class = class
 		method.copyMemberInfo(cfMethod)
 		method.copyAttributes(cfMethod)
+		method.calcArgSlotCount()
 		methods[i] = &method
 	}
 	return methods
@@ -57,4 +59,22 @@ func (self *Method) MaxLocals() uint {
 }
 func (self *Method) Code() []byte {
 	return self.code
+}
+
+func (self *Method) ArgSlotCount() uint {
+	return self.argSlotCount
+}
+
+func (self *Method) CalcArgSlotCount() {
+	parsedDescriptor := parseMethodDescriptor(self.descriptor)
+	for _, paramType := range parsedDescriptor.parameterTypes {
+		self.argSlotCount++
+		if paramType == "J" || paramType == "D" {
+			self.argSlotCount++
+		}
+	}
+
+	if !self.IsStatic() {
+		self.argSlotCount++
+	}
 }
