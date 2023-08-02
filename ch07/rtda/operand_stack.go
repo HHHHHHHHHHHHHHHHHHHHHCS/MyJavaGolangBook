@@ -84,3 +84,8 @@ func (self *OperandStack) PopSlot() Slot {
 	self.size--
 	return self.slots[self.size]
 }
+
+func (self *OperandStack) GetRefFromTop(n uint) *heap.Object {
+	// 因为是倒序的
+	return self.slots[self.size-1-n].ref
+}
