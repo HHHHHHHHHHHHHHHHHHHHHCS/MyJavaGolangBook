@@ -10,7 +10,6 @@ type INVOKE_SPECIAL struct {
 	base.Index16Instruction
 }
 
-// hack!
 func (self *INVOKE_SPECIAL) Execute(frame *rtda.Frame) {
 	currentClass := frame.Method().Class()
 	cp := currentClass.ConstantPool()
@@ -37,7 +36,7 @@ func (self *INVOKE_SPECIAL) Execute(frame *rtda.Frame) {
 		!ref.Class().IsSubClassOf(currentClass) {
 		panic("java.lang.IllegalAccessError")
 	}
-	
+
 	methodToBeInvoked := resolvedMethod
 	if currentClass.IsSuper() &&
 		resolvedClass.IsSuperClassOf(currentClass) &&
