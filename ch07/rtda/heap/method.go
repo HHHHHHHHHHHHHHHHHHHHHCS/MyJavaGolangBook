@@ -65,7 +65,7 @@ func (self *Method) ArgSlotCount() uint {
 	return self.argSlotCount
 }
 
-func (self *Method) CalcArgSlotCount() {
+func (self *Method) calcArgSlotCount() {
 	parsedDescriptor := parseMethodDescriptor(self.descriptor)
 	for _, paramType := range parsedDescriptor.parameterTypes {
 		self.argSlotCount++

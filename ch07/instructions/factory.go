@@ -1,7 +1,7 @@
 package instructions
 
 import "fmt"
-import "MyJavaGolangBook/ch07/instructions/base"
+import . "MyJavaGolangBook/ch07/instructions/base"
 import . "MyJavaGolangBook/ch07/instructions/comparisons"
 import . "MyJavaGolangBook/ch07/instructions/constants"
 import . "MyJavaGolangBook/ch07/instructions/control"
@@ -164,7 +164,7 @@ var (
 	// invoke_native = &INVOKE_NATIVE{}
 )
 
-func NewInstruction(opcode byte) base.Instruction {
+func NewInstruction(opcode byte) Instruction {
 	switch opcode {
 	case 0x00:
 		return nop

@@ -103,3 +103,7 @@ func (self *Class) NewObject() *Object {
 func (self *Class) SuperClass() *Class {
 	return self.superClass
 }
+
+func (self *Class) Name() string {
+	return self.name
+}
