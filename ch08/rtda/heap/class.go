@@ -120,3 +120,7 @@ func (self *Class) StartInit() {
 func (self *Class) GetClinitMethod() *Method {
 	return self.getStaticMethod("<clinit>", "()V")
 }
+
+func (self *Class) IsArray() bool {
+	return self.name[0] == '['
+}
