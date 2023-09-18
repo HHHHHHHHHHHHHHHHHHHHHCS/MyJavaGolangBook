@@ -124,3 +124,6 @@ func (self *Class) GetClinitMethod() *Method {
 func (self *Class) IsArray() bool {
 	return self.name[0] == '['
 }
+func (self *Class) Loader() *ClassLoader {
+	return self.Loader()
+}
