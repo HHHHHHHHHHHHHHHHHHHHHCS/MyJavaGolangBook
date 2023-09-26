@@ -127,3 +127,8 @@ func (self *Class) IsArray() bool {
 func (self *Class) Loader() *ClassLoader {
 	return self.Loader()
 }
+
+func (self *Class) ArrayClass() *Class {
+	arrayClassName := getArrayClassName(self.name)
+	return self.loader.LoadClass(arrayClassName)
+}
