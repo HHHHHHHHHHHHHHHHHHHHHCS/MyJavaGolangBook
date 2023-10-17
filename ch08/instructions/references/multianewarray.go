@@ -38,4 +38,15 @@ func popAndCheckCounts(stack *rtda.OperandStack, dimensions int) []int32 {
 	return counts
 }
 
-//todo:
+func newMultiDimensionalArray(counts []int32, arrClass *heap.Class) *heap.Object {
+	count := uint(counts[0])
+	arr := arrClass.NewArray(count)
+
+	if len(counts) > 1 {
+		refs := arr.Refs()
+		for i := range refs {
+			refs[i] = newMultiDimensionalArray(counts[1:], arrClass.ComponentClass())
+		}
+	}
+	return arr
+}
