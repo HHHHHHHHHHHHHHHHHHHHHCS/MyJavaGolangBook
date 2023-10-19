@@ -31,6 +31,20 @@ func (self *Method) copyAttributes(cfMethod *classfile.MemberInfo) {
 	}
 }
 
+func (self *Method) calcArgSlotCount() {
+	parsedDescriptor := parseMethodDescriptor(self.descriptor)
+	for _, paramType := range parsedDescriptor.parameterTypes {
+		self.argSlotCount++
+		if paramType == "J" || paramType == "D" {
+			self.argSlotCount++
+		}
+	}
+
+	if !self.IsStatic() {
+		self.argSlotCount++
+	}
+}
+
 func (self *Method) IsSynchronized() bool {
 	return 0 != self.accessFlags&ACC_SYNCHRONIZED
 }
@@ -65,16 +79,4 @@ func (self *Method) ArgSlotCount() uint {
 	return self.argSlotCount
 }
 
-func (self *Method) calcArgSlotCount() {
-	parsedDescriptor := parseMethodDescriptor(self.descriptor)
-	for _, paramType := range parsedDescriptor.parameterTypes {
-		self.argSlotCount++
-		if paramType == "J" || paramType == "D" {
-			self.argSlotCount++
-		}
-	}
 
-	if !self.IsStatic() {
-		self.argSlotCount++
-	}
-}

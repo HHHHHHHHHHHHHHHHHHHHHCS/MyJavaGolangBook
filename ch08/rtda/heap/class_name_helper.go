@@ -16,6 +16,13 @@ func getArrayClassName(className string) string {
 	return "[" + toDescriptor(className)
 }
 
+func getComponentClassName(className string) string {
+	if className[0] == '[' {
+		componentTypeDescriptor := className[1:]
+		return toClassName(componentTypeDescriptor)
+	}
+	panic("Not array: " + className)
+}
 func toDescriptor(className string) string {
 	if className[0] == '[' {
 		return className
@@ -28,13 +35,7 @@ func toDescriptor(className string) string {
 	return "L" + className + ";"
 }
 
-func getComponentClassName(className string) string {
-	if className[0] == '[' {
-		componentTypeDescriptor := className[1:]
-		return toClassName(componentTypeDescriptor)
-	}
-	panic("Not array: " + className)
-}
+
 
 func toClassName(descriptor string) string {
 	if descriptor[0] == '[' { // array

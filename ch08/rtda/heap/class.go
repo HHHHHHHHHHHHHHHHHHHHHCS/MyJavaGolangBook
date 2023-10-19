@@ -6,20 +6,20 @@ import (
 )
 
 type Class struct {
-	accessFlags        uint16
-	name               string // this class name
-	superClassName     string
-	interfaceNames     []string
-	constantPool       *ConstantPool
-	fields             []*Field
-	methods            []*Method
-	loader             *ClassLoader
-	superClass         *Class
-	interfaces         []*Class
-	instancesSlotCount uint
-	staticSlotCount    uint
-	staticVars         Slots
-	initStarted        bool
+	accessFlags       uint16
+	name              string // this class name
+	superClassName    string
+	interfaceNames    []string
+	constantPool      *ConstantPool
+	fields            []*Field
+	methods           []*Method
+	loader            *ClassLoader
+	superClass        *Class
+	interfaces        []*Class
+	instanceSlotCount uint
+	staticSlotCount   uint
+	staticVars        Slots
+	initStarted       bool
 }
 
 func newClass(cf *classfile.ClassFile) *Class {
@@ -60,12 +60,31 @@ func (self *Class) IsEnum() bool {
 }
 
 // getters
+func (self *Class) Name() string {
+	return self.name
+}
+
 func (self *Class) ConstantPool() *ConstantPool {
 	return self.constantPool
+}
+func (self *Class) Loader() *ClassLoader {
+	return self.loader
+}
+
+func (self *Class) SuperClass() *Class {
+	return self.superClass
 }
 
 func (self *Class) StaticVars() Slots {
 	return self.staticVars
+}
+
+func (self *Class) InitStarted() bool {
+	return self.initStarted
+}
+
+func (self *Class) StartInit() {
+	self.initStarted = true
 }
 
 // jvms 5.4.4
@@ -85,6 +104,10 @@ func (self *Class) GetMainMethod() *Method {
 	return self.getStaticMethod("main", "([Ljava/lang/String;)V")
 }
 
+func (self *Class) GetClinitMethod() *Method {
+	return self.getStaticMethod("<clinit>", "()V")
+}
+
 func (self *Class) getStaticMethod(name, descriptor string) *Method {
 	for _, method := range self.methods {
 		if method.IsStatic() &&
@@ -97,37 +120,21 @@ func (self *Class) getStaticMethod(name, descriptor string) *Method {
 	return nil
 }
 
+
+
+func (self *Class) isJlObject() bool {
+	return self.name == "java/lang/Object"
+}
+func (self *Class) isJlCloneable() bool {
+	return self.name == "java/lang/Cloneable"
+}
+func (self *Class) isJioSerializable() bool {
+	return self.name == "java/io/Serializable"
+}
+
 func (self *Class) NewObject() *Object {
 	return newObject(self)
 }
-
-func (self *Class) SuperClass() *Class {
-	return self.superClass
-}
-
-func (self *Class) Name() string {
-	return self.name
-}
-
-func (self *Class) InitStarted() bool {
-	return self.initStarted
-}
-
-func (self *Class) StartInit() {
-	self.initStarted = true
-}
-
-func (self *Class) GetClinitMethod() *Method {
-	return self.getStaticMethod("<clinit>", "()V")
-}
-
-func (self *Class) IsArray() bool {
-	return self.name[0] == '['
-}
-func (self *Class) Loader() *ClassLoader {
-	return self.Loader()
-}
-
 func (self *Class) ArrayClass() *Class {
 	arrayClassName := getArrayClassName(self.name)
 	return self.loader.LoadClass(arrayClassName)

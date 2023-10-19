@@ -38,18 +38,19 @@ func (self *Thread) PopFrame() *Frame {
 	return self.stack.pop()
 }
 
+func (self *Thread) CurrentFrame() *Frame {
+	return self.stack.top()
+}
+
 func (self *Thread) TopFrame() *Frame {
 	return self.stack.top()
 }
 
-func (self *Thread) CurrentFrame() *Frame {
-	return self.stack.top()
+func (self *Thread) IsStackEmpty() bool {
+	return self.stack.isEmpty()
 }
 
 func (self *Thread) NewFrame(method *heap.Method) *Frame {
 	return newFrame(self, method)
 }
 
-func (self *Thread) IsStackEmpty() bool {
-	return self.stack.isEmpty()
-}

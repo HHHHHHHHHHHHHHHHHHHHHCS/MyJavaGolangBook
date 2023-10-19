@@ -7,7 +7,7 @@ import (
 )
 import "strings"
 
-// -Xjre "D:\java-se-8u43-ri\jre" java_test.FibonacciTest
+// -Xjre "D:\java-se-8u43-ri\jre" java_test.BubbleSortTest
 func main() {
 	cmd := parseCmd()
 

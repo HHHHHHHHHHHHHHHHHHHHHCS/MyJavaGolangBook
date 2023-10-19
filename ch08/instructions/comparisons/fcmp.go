@@ -9,8 +9,16 @@ type FCMPG struct {
 	base.NoOperandsInstruction
 }
 
+func (self *FCMPG) Execute(frame *rtda.Frame) {
+	_fcmp(frame, true)
+}
+
 type FCMPL struct {
 	base.NoOperandsInstruction
+}
+
+func (self *FCMPL) Execute(frame *rtda.Frame) {
+	_fcmp(frame, false)
 }
 
 // 浮点数还存在nan 无法比较
@@ -30,12 +38,4 @@ func _fcmp(frame *rtda.Frame, gFlag bool) {
 	} else {
 		stack.PushInt(-1)
 	}
-}
-
-func (self *FCMPG) Execute(frame *rtda.Frame) {
-	_fcmp(frame, true)
-}
-
-func (self *FCMPL) Execute(frame *rtda.Frame) {
-	_fcmp(frame, false)
 }

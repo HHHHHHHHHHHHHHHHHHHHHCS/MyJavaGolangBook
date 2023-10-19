@@ -9,21 +9,25 @@ type LDC struct {
 	base.Index8Instruction
 }
 
+func (self *LDC) Execute(frame *rtda.Frame) {
+	_ldc(frame, self.Index)
+}
+
+
 type LDC_W struct {
 	base.Index16Instruction
+}
+
+func (self *LDC_W) Execute(frame *rtda.Frame) {
+	_ldc(frame, self.Index)
 }
 
 type LDC2_W struct {
 	base.Index16Instruction
 }
 
-func (self *LDC) Execute(frame *rtda.Frame) {
-	_ldc(frame, self.Index)
-}
 
-func (self *LDC_W) Execute(frame *rtda.Frame) {
-	_ldc(frame, self.Index)
-}
+
 
 func _ldc(frame *rtda.Frame, index uint) {
 	stack := frame.OperandStack()

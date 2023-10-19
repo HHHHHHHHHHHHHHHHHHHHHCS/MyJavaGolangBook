@@ -10,46 +10,6 @@ type AASTORE struct {
 	base.NoOperandsInstruction
 }
 
-type BASTORE struct {
-	base.NoOperandsInstruction
-}
-
-type CASTORE struct {
-	base.NoOperandsInstruction
-}
-
-type DASTORE struct {
-	base.NoOperandsInstruction
-}
-
-type FASTORE struct {
-	base.NoOperandsInstruction
-}
-
-type IASTORE struct {
-	base.NoOperandsInstruction
-}
-
-type LASTORE struct {
-	base.NoOperandsInstruction
-}
-
-type SASTORE struct {
-	base.NoOperandsInstruction
-}
-
-func checkNotNil(ref *heap.Object) {
-	if ref == nil {
-		panic("java.lang.NullPointerException")
-	}
-}
-
-func checkIndex(arrLen int, index int32) {
-	if index < 0 || index >= int32(arrLen) {
-		panic("ArrayIndexOutOfBoundsException")
-	}
-}
-
 func (self *AASTORE) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	ref := stack.PopRef()
@@ -60,6 +20,10 @@ func (self *AASTORE) Execute(frame *rtda.Frame) {
 	refs := arrRef.Refs()
 	checkIndex(len(refs), index)
 	refs[index] = ref
+}
+
+type BASTORE struct {
+	base.NoOperandsInstruction
 }
 
 func (self *BASTORE) Execute(frame *rtda.Frame) {
@@ -74,6 +38,10 @@ func (self *BASTORE) Execute(frame *rtda.Frame) {
 	bytes[index] = int8(val)
 }
 
+type CASTORE struct {
+	base.NoOperandsInstruction
+}
+
 func (self *CASTORE) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	val := stack.PopInt()
@@ -84,6 +52,10 @@ func (self *CASTORE) Execute(frame *rtda.Frame) {
 	chars := arrRef.Chars()
 	checkIndex(len(chars), index)
 	chars[index] = uint16(val)
+}
+
+type DASTORE struct {
+	base.NoOperandsInstruction
 }
 
 func (self *DASTORE) Execute(frame *rtda.Frame) {
@@ -98,6 +70,10 @@ func (self *DASTORE) Execute(frame *rtda.Frame) {
 	doubles[index] = float64(val)
 }
 
+type FASTORE struct {
+	base.NoOperandsInstruction
+}
+
 func (self *FASTORE) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	val := stack.PopFloat()
@@ -108,6 +84,10 @@ func (self *FASTORE) Execute(frame *rtda.Frame) {
 	floats := arrRef.Floats()
 	checkIndex(len(floats), index)
 	floats[index] = float32(val)
+}
+
+type IASTORE struct {
+	base.NoOperandsInstruction
 }
 
 func (self *IASTORE) Execute(frame *rtda.Frame) {
@@ -122,6 +102,10 @@ func (self *IASTORE) Execute(frame *rtda.Frame) {
 	ints[index] = int32(val)
 }
 
+type LASTORE struct {
+	base.NoOperandsInstruction
+}
+
 func (self *LASTORE) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	val := stack.PopLong()
@@ -134,6 +118,10 @@ func (self *LASTORE) Execute(frame *rtda.Frame) {
 	longs[index] = int64(val)
 }
 
+type SASTORE struct {
+	base.NoOperandsInstruction
+}
+
 func (self *SASTORE) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	val := stack.PopInt()
@@ -144,4 +132,16 @@ func (self *SASTORE) Execute(frame *rtda.Frame) {
 	shorts := arrRef.Shorts()
 	checkIndex(len(shorts), index)
 	shorts[index] = int16(val)
+}
+
+func checkNotNil(ref *heap.Object) {
+	if ref == nil {
+		panic("java.lang.NullPointerException")
+	}
+}
+
+func checkIndex(arrLen int, index int32) {
+	if index < 0 || index >= int32(arrLen) {
+		panic("ArrayIndexOutOfBoundsException")
+	}
 }

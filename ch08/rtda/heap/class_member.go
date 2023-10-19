@@ -44,3 +44,21 @@ func (self *ClassMember) Descriptor() string {
 func (self *ClassMember) Class() *Class {
 	return self.class
 }
+
+func (self *ClassMember) isAccessibleTo(d *Class) bool {
+	if self.IsPublic() {
+		return true
+	}
+
+	c := self.class
+
+	if self.IsProtected() {
+		return d == c || d.IsSubClassOf(c) ||
+			c.GetPackageName() == d.GetPackageName()
+	}
+
+	if !self.IsPrivate() {
+		return c.GetPackageName() == d.GetPackageName()
+	}
+	return d == c
+}

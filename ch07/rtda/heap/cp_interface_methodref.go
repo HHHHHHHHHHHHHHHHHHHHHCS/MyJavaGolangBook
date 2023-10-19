@@ -16,7 +16,7 @@ func newInterfaceMethodRef(cp *ConstantPool, refInfo *classfile.ConstantInterfac
 
 func (self *InterfaceMethodRef) ResolvedInterfaceMethod() *Method {
 	if self.method == nil {
-		self.ResolvedInterfaceMethod()
+		self.resolveInterfaceMethodRef()
 	}
 	return self.method
 }

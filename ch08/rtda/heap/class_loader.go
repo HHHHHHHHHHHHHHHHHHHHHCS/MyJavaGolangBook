@@ -78,7 +78,7 @@ func (self *ClassLoader) defineClass(data []byte) *Class {
 func parseClass(data []byte) *Class {
 	cf, err := classfile.Parse(data)
 	if err != nil {
-		panic("java.lang.ClassFormatError")
+		panic(err)
 	}
 	return newClass(cf)
 }
@@ -118,7 +118,7 @@ func prepare(class *Class) {
 func calcInstanceFieldSlotIds(class *Class) {
 	slotId := uint(0)
 	if class.superClass != nil {
-		slotId = class.superClass.instancesSlotCount
+		slotId = class.superClass.instanceSlotCount
 	}
 
 	for _, field := range class.fields {
@@ -131,7 +131,7 @@ func calcInstanceFieldSlotIds(class *Class) {
 		}
 	}
 
-	class.instancesSlotCount = slotId
+	class.instanceSlotCount = slotId
 }
 
 func calcStaticFieldSlotIds(class *Class) {
