@@ -1,6 +1,8 @@
 package heap
 
-import "unicode/utf16"
+import (
+	"unicode/utf16"
+)
 
 var internedStrings = map[string]*Object{}
 
@@ -18,7 +20,16 @@ func JString(loader *ClassLoader, goStr string) *Object {
 }
 
 func stringToUtf16(s string) []uint16 {
-
 	runes := []rune(s) //utf32
 	return utf16.Encode(runes)
+}
+
+func GoString(jStr *Object) string {
+	charArr := jStr.GetRefVar("value", "[C")
+	return utf16ToString(charArr.Chars())
+}
+
+func utf16ToString(s []uint16) string {
+	runes := utf16.Decode(s)
+	return string(runes)
 }

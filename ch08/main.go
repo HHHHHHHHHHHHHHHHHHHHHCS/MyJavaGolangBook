@@ -8,6 +8,7 @@ import (
 import "strings"
 
 // -Xjre "D:\java-se-8u43-ri\jre" java_test.BubbleSortTest
+// -Xjre "D:\java-se-8u43-ri\jre" java_test.HelloWorld chi fan 吃饭, 饿了!
 func main() {
 	cmd := parseCmd()
 
@@ -28,7 +29,7 @@ func startJVM(cmd *Cmd) {
 	mainClass := classLoader.LoadClass(className)
 	mainMethod := mainClass.GetMainMethod()
 	if mainMethod != nil {
-		interpret(mainMethod, cmd.verboseInstFlag)
+		interpret(mainMethod, cmd.verboseInstFlag, cmd.args)
 	} else {
 		fmt.Printf("Main method not found in class %s\n", cmd.class)
 	}

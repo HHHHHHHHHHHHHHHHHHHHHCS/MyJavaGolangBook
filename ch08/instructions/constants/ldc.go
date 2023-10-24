@@ -3,6 +3,7 @@ package constants
 import (
 	"MyJavaGolangBook/ch08/instructions/base"
 	"MyJavaGolangBook/ch08/rtda"
+	"MyJavaGolangBook/ch08/rtda/heap"
 )
 
 type LDC struct {
@@ -12,7 +13,6 @@ type LDC struct {
 func (self *LDC) Execute(frame *rtda.Frame) {
 	_ldc(frame, self.Index)
 }
-
 
 type LDC_W struct {
 	base.Index16Instruction
@@ -26,21 +26,20 @@ type LDC2_W struct {
 	base.Index16Instruction
 }
 
-
-
-
 func _ldc(frame *rtda.Frame, index uint) {
 	stack := frame.OperandStack()
-	cp := frame.Method().Class().ConstantPool()
-	c := cp.GetConstant(index)
+	class := frame.Method().Class()
+	c := class.ConstantPool().GetConstant(index)
 
 	switch c.(type) {
 	case int32:
 		stack.PushInt(c.(int32))
 	case float32:
 		stack.PushFloat(c.(float32))
-	// TODO: string
-	// TODO: *heap.ClassRef
+	case string:
+		internedStr := heap.JString(class.Loader(), c.(string))
+		stack.PushRef(internedStr)
+	//TODO: *heap.ClassRef
 	default:
 		panic("todo: ldc!")
 	}
