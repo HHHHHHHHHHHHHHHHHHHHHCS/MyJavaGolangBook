@@ -1,8 +1,8 @@
 package main
 
 import (
-	"MyJavaGolangBook/ch08/classpath"
-	"MyJavaGolangBook/ch08/rtda/heap"
+	"MyJavaGolangBook/ch09/classpath"
+	"MyJavaGolangBook/ch09/rtda/heap"
 	"fmt"
 )
 import "strings"

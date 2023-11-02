@@ -1,6 +1,6 @@
 package heap
 
-import "MyJavaGolangBook/ch08/classfile"
+import "MyJavaGolangBook/ch09/classfile"
 
 type ClassMember struct {
 	accessFlags uint16

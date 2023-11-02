@@ -1,7 +1,7 @@
 package rtda
 
 import (
-	"MyJavaGolangBook/ch08/rtda/heap"
+	"MyJavaGolangBook/ch09/rtda/heap"
 	"math"
 )
 

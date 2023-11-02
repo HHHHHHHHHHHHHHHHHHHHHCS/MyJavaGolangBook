@@ -1,8 +1,8 @@
 package stack
 
 import (
-	"MyJavaGolangBook/ch08/instructions/base"
-	"MyJavaGolangBook/ch08/rtda"
+	"MyJavaGolangBook/ch09/instructions/base"
+	"MyJavaGolangBook/ch09/rtda"
 )
 
 type DUP struct {

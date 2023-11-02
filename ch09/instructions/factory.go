@@ -1,17 +1,18 @@
 package instructions
 
 import "fmt"
-import . "MyJavaGolangBook/ch08/instructions/base"
-import . "MyJavaGolangBook/ch08/instructions/comparisons"
-import . "MyJavaGolangBook/ch08/instructions/constants"
-import . "MyJavaGolangBook/ch08/instructions/control"
-import . "MyJavaGolangBook/ch08/instructions/conversions"
-import . "MyJavaGolangBook/ch08/instructions/extended"
-import . "MyJavaGolangBook/ch08/instructions/loads"
-import . "MyJavaGolangBook/ch08/instructions/math"
-import . "MyJavaGolangBook/ch08/instructions/references"
-import . "MyJavaGolangBook/ch08/instructions/stack"
-import . "MyJavaGolangBook/ch08/instructions/stores"
+import . "MyJavaGolangBook/ch09/instructions/base"
+import . "MyJavaGolangBook/ch09/instructions/comparisons"
+import . "MyJavaGolangBook/ch09/instructions/constants"
+import . "MyJavaGolangBook/ch09/instructions/control"
+import . "MyJavaGolangBook/ch09/instructions/conversions"
+import . "MyJavaGolangBook/ch09/instructions/extended"
+import . "MyJavaGolangBook/ch09/instructions/loads"
+import . "MyJavaGolangBook/ch09/instructions/math"
+import . "MyJavaGolangBook/ch09/instructions/references"
+import . "MyJavaGolangBook/ch09/instructions/stack"
+import . "MyJavaGolangBook/ch09/instructions/stores"
+import . "MyJavaGolangBook/ch09/instructions/reserved"
 
 var (
 	nop         = &NOP{}
@@ -161,7 +162,7 @@ var (
 	//athrow        = &ATHROW{}
 	//monitorenter  = &MONITOR_ENTER{}
 	//monitorexit   = &MONITOR_EXIT{}
-	//invoke_native = &INVOKE_NATIVE{}
+	invoke_native = &INVOKE_NATIVE{}
 )
 
 func NewInstruction(opcode byte) Instruction {

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"MyJavaGolangBook/ch08/instructions"
-	"MyJavaGolangBook/ch08/rtda/heap"
+	"MyJavaGolangBook/ch09/instructions"
+	"MyJavaGolangBook/ch09/rtda/heap"
 	"fmt"
 )
-import "MyJavaGolangBook/ch08/instructions/base"
-import "MyJavaGolangBook/ch08/rtda"
+import "MyJavaGolangBook/ch09/instructions/base"
+import "MyJavaGolangBook/ch09/rtda"
 
 func interpret(method *heap.Method, logInst bool, args []string) {
 	thread := rtda.NewThread()

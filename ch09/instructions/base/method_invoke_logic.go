@@ -1,8 +1,8 @@
 package base
 
 import (
-	"MyJavaGolangBook/ch08/rtda"
-	"MyJavaGolangBook/ch08/rtda/heap"
+	"MyJavaGolangBook/ch09/rtda"
+	"MyJavaGolangBook/ch09/rtda/heap"
 	"fmt"
 )
 

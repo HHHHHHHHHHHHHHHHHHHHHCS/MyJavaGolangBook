@@ -1,7 +1,7 @@
 package math
 
-import "MyJavaGolangBook/ch08/instructions/base"
-import "MyJavaGolangBook/ch08/rtda"
+import "MyJavaGolangBook/ch09/instructions/base"
+import "MyJavaGolangBook/ch09/rtda"
 
 // Increment local variable by constant
 type IINC struct {

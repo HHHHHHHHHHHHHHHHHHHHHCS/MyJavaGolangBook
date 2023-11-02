@@ -1,8 +1,8 @@
 package heap
 
 import (
-	"MyJavaGolangBook/ch08/classfile"
-	"MyJavaGolangBook/ch08/classpath"
+	"MyJavaGolangBook/ch09/classfile"
+	"MyJavaGolangBook/ch09/classpath"
 	"fmt"
 )
 

@@ -1,6 +1,6 @@
 package rtda
 
-import "MyJavaGolangBook/ch08/rtda/heap"
+import "MyJavaGolangBook/ch09/rtda/heap"
 
 /*
 JVM
@@ -53,4 +53,3 @@ func (self *Thread) IsStackEmpty() bool {
 func (self *Thread) NewFrame(method *heap.Method) *Frame {
 	return newFrame(self, method)
 }
-

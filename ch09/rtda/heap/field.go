@@ -1,7 +1,7 @@
 package heap
 
 import (
-	"MyJavaGolangBook/ch08/classfile"
+	"MyJavaGolangBook/ch09/classfile"
 )
 
 type Field struct {

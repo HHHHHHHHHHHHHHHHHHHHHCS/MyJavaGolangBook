@@ -1,6 +1,6 @@
 package rtda
 
-import "MyJavaGolangBook/ch08/rtda/heap"
+import "MyJavaGolangBook/ch09/rtda/heap"
 
 // stack frame
 type Frame struct {

@@ -1,7 +1,7 @@
 package native
 
 import (
-	"MyJavaGolangBook/ch08/rtda"
+	"MyJavaGolangBook/ch09/rtda"
 )
 
 type NativeMethod func(frame *rtda.Frame)
