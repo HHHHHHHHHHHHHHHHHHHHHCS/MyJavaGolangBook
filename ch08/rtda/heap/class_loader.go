@@ -13,6 +13,7 @@ type ClassLoader struct {
 }
 
 func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
+
 	return &ClassLoader{
 		cp:          cp,
 		verboseFlag: verboseFlag,

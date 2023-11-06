@@ -12,12 +12,24 @@ type ClassLoader struct {
 	classMap    map[string]*Class
 }
 
+func (self *ClassLoader) loadBasicClasses() {
+	jlClassClass := self.LoadClass("java/lang/Class")
+	for _, class := range self.classMap {
+		if class.jClass == nil {
+			class.jClass = jlClassClass.NewObject()
+			class.jClass.extra = class
+		}
+	}
+}
+
 func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
-	return &ClassLoader{
+	loader := &ClassLoader{
 		cp:          cp,
 		verboseFlag: verboseFlag,
 		classMap:    make(map[string]*Class),
 	}
+	loader.loadBasicClasses()
+	return loader
 }
 
 func (self *ClassLoader) LoadClass(name string) *Class {
@@ -25,11 +37,19 @@ func (self *ClassLoader) LoadClass(name string) *Class {
 		return class
 	}
 
+	var class *Class
 	if name[0] == '[' {
-		return self.loadArrayClass(name)
+		class = self.loadArrayClass(name)
+	} else {
+		class = self.loadNonArrayClass(name)
 	}
 
-	return self.loadNonArrayClass(name)
+	if jlClassClass, ok := self.classMap["java/lang/Class"]; ok {
+		class.jClass = jlClassClass.NewObject()
+		class.jClass.extra = class
+	}
+
+	return class
 }
 
 func (self *ClassLoader) loadArrayClass(name string) *Class {
