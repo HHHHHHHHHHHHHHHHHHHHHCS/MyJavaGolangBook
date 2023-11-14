@@ -22,6 +22,24 @@ func (self *ClassLoader) loadBasicClasses() {
 	}
 }
 
+func (self *ClassLoader) loadPrimitiveClass(className string) {
+	class := &Class{
+		accessFlags: ACC_PUBLIC,
+		name:        className,
+		loader:      self,
+		initStarted: true,
+	}
+	class.jClass = self.classMap["java/lang/Class"].NewObject()
+	class.jClass.extra = class
+	self.classMap[className] = class
+}
+
+func (self *ClassLoader) loadPrimitiveClasses() {
+	for primitiveType, _ := range primitiveTypes {
+		self.loadPrimitiveClass(primitiveType) // 找到基本类型 比如void int float 等
+	}
+}
+
 func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
 	loader := &ClassLoader{
 		cp:          cp,
@@ -29,6 +47,7 @@ func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
 		classMap:    make(map[string]*Class),
 	}
 	loader.loadBasicClasses()
+	loader.loadPrimitiveClasses()
 	return loader
 }
 

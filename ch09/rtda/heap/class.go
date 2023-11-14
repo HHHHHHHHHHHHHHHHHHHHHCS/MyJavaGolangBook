@@ -139,6 +139,10 @@ func (self *Class) ArrayClass() *Class {
 	return self.loader.LoadClass(arrayClassName)
 }
 
+func (self *Class) JClass() *Object {
+	return self.jClass
+}
+
 func (self *Class) getField(name, descriptor string, isStatic bool) *Field {
 	for c := self; c != nil; c = c.superClass {
 		for _, field := range c.fields {
