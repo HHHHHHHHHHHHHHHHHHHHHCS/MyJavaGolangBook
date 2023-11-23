@@ -155,3 +155,7 @@ func (self *Class) getField(name, descriptor string, isStatic bool) *Field {
 	}
 	return nil
 }
+
+func (self *Class) JavaName() string {
+	return strings.Replace(self.name, "/", ".", -1)
+}

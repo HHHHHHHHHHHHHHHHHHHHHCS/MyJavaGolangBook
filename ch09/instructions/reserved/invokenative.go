@@ -3,6 +3,7 @@ package reserved
 import (
 	"MyJavaGolangBook/ch09/instructions/base"
 	"MyJavaGolangBook/ch09/native"
+	_ "MyJavaGolangBook/ch09/native/java/lang"
 	"MyJavaGolangBook/ch09/rtda"
 )
 

@@ -22,6 +22,14 @@ func (self *Object) Fields() Slots {
 	return self.data.(Slots)
 }
 
+func (self *Object) Extra() interface{} {
+	return self.extra
+}
+
+func (self *Object) SetExtra(extra interface{}) {
+	self.extra = extra
+}
+
 func (self *Object) IsInstanceOf(class *Class) bool {
 	return class.isAssignableFrom(self.class)
 }
