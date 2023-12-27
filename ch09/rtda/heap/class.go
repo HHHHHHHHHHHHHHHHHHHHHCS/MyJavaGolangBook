@@ -35,6 +35,10 @@ func newClass(cf *classfile.ClassFile) *Class {
 	return class
 }
 
+func (self *Class) IsPrimitive() bool {
+	_, ok := primitiveTypes[self.name]
+	return ok
+}
 func (self *Class) IsPublic() bool {
 	return 0 != self.accessFlags&ACC_PUBLIC
 }
