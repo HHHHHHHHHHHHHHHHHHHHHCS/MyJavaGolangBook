@@ -24,9 +24,9 @@ func (self *INVOKE_SPECIAL) Execute(frame *rtda.Frame) {
 		panic("java.lang.IncompatibleClassChangeError")
 	}
 
-	ref := frame.OperandStack().GetRefFromTop(resolvedMethod.ArgSlotCount())
+	ref := frame.OperandStack().GetRefFromTop(resolvedMethod.ArgSlotCount() - 1)
 	if ref == nil {
-		panic("java.lang.NullPointException")
+		panic("java.lang.NullPointerException")
 	}
 
 	if resolvedMethod.IsProtected() &&

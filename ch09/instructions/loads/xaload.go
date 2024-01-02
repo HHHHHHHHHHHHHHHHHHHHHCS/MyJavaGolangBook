@@ -6,49 +6,8 @@ import (
 	"MyJavaGolangBook/ch09/rtda/heap"
 )
 
-type AALOAD struct {
-	base.NoOperandsInstruction
-}
-
-type BALOAD struct {
-	base.NoOperandsInstruction
-}
-
-type CALOAD struct {
-	base.NoOperandsInstruction
-}
-
-type DALOAD struct {
-	base.NoOperandsInstruction
-}
-
-type FALOAD struct {
-	base.NoOperandsInstruction
-}
-
-type IALOAD struct {
-	base.NoOperandsInstruction
-}
-
-type LALOAD struct {
-	base.NoOperandsInstruction
-}
-
-type SALOAD struct {
-	base.NoOperandsInstruction
-}
-
-func checkNotNil(ref *heap.Object) {
-	if ref == nil {
-		panic("java.lang.NullPointerException")
-	}
-}
-
-func checkIndex(arrLen int, index int32) {
-	if index < 0 || index >= int32(arrLen) {
-		panic("ArrayIndexOutOfBoundsException")
-	}
-}
+// Load reference from array
+type AALOAD struct{ base.NoOperandsInstruction }
 
 func (self *AALOAD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -61,6 +20,9 @@ func (self *AALOAD) Execute(frame *rtda.Frame) {
 	stack.PushRef(refs[index])
 }
 
+// Load byte or boolean from array
+type BALOAD struct{ base.NoOperandsInstruction }
+
 func (self *BALOAD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	index := stack.PopInt()
@@ -71,6 +33,9 @@ func (self *BALOAD) Execute(frame *rtda.Frame) {
 	checkIndex(len(bytes), index)
 	stack.PushInt(int32(bytes[index]))
 }
+
+// Load char from array
+type CALOAD struct{ base.NoOperandsInstruction }
 
 func (self *CALOAD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -83,6 +48,9 @@ func (self *CALOAD) Execute(frame *rtda.Frame) {
 	stack.PushInt(int32(chars[index]))
 }
 
+// Load double from array
+type DALOAD struct{ base.NoOperandsInstruction }
+
 func (self *DALOAD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	index := stack.PopInt()
@@ -93,6 +61,9 @@ func (self *DALOAD) Execute(frame *rtda.Frame) {
 	checkIndex(len(doubles), index)
 	stack.PushDouble(doubles[index])
 }
+
+// Load float from array
+type FALOAD struct{ base.NoOperandsInstruction }
 
 func (self *FALOAD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -105,6 +76,9 @@ func (self *FALOAD) Execute(frame *rtda.Frame) {
 	stack.PushFloat(floats[index])
 }
 
+// Load int from array
+type IALOAD struct{ base.NoOperandsInstruction }
+
 func (self *IALOAD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	index := stack.PopInt()
@@ -115,6 +89,9 @@ func (self *IALOAD) Execute(frame *rtda.Frame) {
 	checkIndex(len(ints), index)
 	stack.PushInt(ints[index])
 }
+
+// Load long from array
+type LALOAD struct{ base.NoOperandsInstruction }
 
 func (self *LALOAD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -127,6 +104,9 @@ func (self *LALOAD) Execute(frame *rtda.Frame) {
 	stack.PushLong(longs[index])
 }
 
+// Load short from array
+type SALOAD struct{ base.NoOperandsInstruction }
+
 func (self *SALOAD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	index := stack.PopInt()
@@ -136,4 +116,15 @@ func (self *SALOAD) Execute(frame *rtda.Frame) {
 	shorts := arrRef.Shorts()
 	checkIndex(len(shorts), index)
 	stack.PushInt(int32(shorts[index]))
+}
+
+func checkNotNil(ref *heap.Object) {
+	if ref == nil {
+		panic("java.lang.NullPointerException")
+	}
+}
+func checkIndex(arrLen int, index int32) {
+	if index < 0 || index >= int32(arrLen) {
+		panic("ArrayIndexOutOfBoundsException")
+	}
 }

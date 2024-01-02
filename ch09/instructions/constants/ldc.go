@@ -22,9 +22,6 @@ func (self *LDC_W) Execute(frame *rtda.Frame) {
 	_ldc(frame, self.Index)
 }
 
-type LDC2_W struct {
-	base.Index16Instruction
-}
 
 func _ldc(frame *rtda.Frame, index uint) {
 	stack := frame.OperandStack()
@@ -46,6 +43,9 @@ func _ldc(frame *rtda.Frame, index uint) {
 	default:
 		panic("todo: ldc!")
 	}
+}
+type LDC2_W struct {
+	base.Index16Instruction
 }
 
 func (self *LDC2_W) Execute(frame *rtda.Frame) {

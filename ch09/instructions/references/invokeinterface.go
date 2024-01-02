@@ -12,26 +12,26 @@ type INVOKE_INTERFACE struct {
 	// zero uint8
 }
 
-func (self *INVOKE_INTERFACE) FetchOperands(render *base.BytecodeReader) {
-	self.index = uint(render.ReadUint16())
-	render.ReadUint8() // count
-	render.ReadUint8() // must be 0
+func (self *INVOKE_INTERFACE) FetchOperands(reader *base.BytecodeReader) {
+	self.index = uint(reader.ReadUint16())
+	reader.ReadUint8() // count
+	reader.ReadUint8() // must be 0
 }
 
 func (self *INVOKE_INTERFACE) Execute(frame *rtda.Frame) {
 	cp := frame.Method().Class().ConstantPool()
 	methodRef := cp.GetConstant(self.index).(*heap.InterfaceMethodRef)
-	resolveMethod := methodRef.ResolvedInterfaceMethod()
-	if resolveMethod.IsStatic() || resolveMethod.IsPrivate() {
+	resolvedMethod := methodRef.ResolvedInterfaceMethod()
+	if resolvedMethod.IsStatic() || resolvedMethod.IsPrivate() {
 		panic("java.lang.IncompatibleClassChangeError")
 	}
 
-	ref := frame.OperandStack().GetRefFromTop(resolveMethod.ArgSlotCount() - 1)
+	ref := frame.OperandStack().GetRefFromTop(resolvedMethod.ArgSlotCount() - 1)
 	if ref == nil {
-		panic("java.lang.NullPointerException")
+		panic("java.lang.NullPointerException") // todo
 	}
 	if !ref.Class().IsImplements(methodRef.ResolvedClass()) {
-		panic("java.lang.IncompatibleClassError")
+		panic("java.lang.IncompatibleClassChangeError")
 	}
 
 	methodToBeInvoked := heap.LookupMethodInClass(ref.Class(),

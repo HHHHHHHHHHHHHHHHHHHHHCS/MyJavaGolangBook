@@ -12,6 +12,17 @@ type ClassLoader struct {
 	classMap    map[string]*Class
 }
 
+func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
+	loader := &ClassLoader{
+		cp:          cp,
+		verboseFlag: verboseFlag,
+		classMap:    make(map[string]*Class),
+	}
+	loader.loadBasicClasses()
+	loader.loadPrimitiveClasses()
+	return loader
+}
+
 func (self *ClassLoader) loadBasicClasses() {
 	jlClassClass := self.LoadClass("java/lang/Class")
 	for _, class := range self.classMap {
@@ -22,6 +33,11 @@ func (self *ClassLoader) loadBasicClasses() {
 	}
 }
 
+func (self *ClassLoader) loadPrimitiveClasses() {
+	for primitiveType, _ := range primitiveTypes {
+		self.loadPrimitiveClass(primitiveType) // 找到基本类型 比如void int float 等
+	}
+}
 func (self *ClassLoader) loadPrimitiveClass(className string) {
 	class := &Class{
 		accessFlags: ACC_PUBLIC,
@@ -34,22 +50,8 @@ func (self *ClassLoader) loadPrimitiveClass(className string) {
 	self.classMap[className] = class
 }
 
-func (self *ClassLoader) loadPrimitiveClasses() {
-	for primitiveType, _ := range primitiveTypes {
-		self.loadPrimitiveClass(primitiveType) // 找到基本类型 比如void int float 等
-	}
-}
 
-func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
-	loader := &ClassLoader{
-		cp:          cp,
-		verboseFlag: verboseFlag,
-		classMap:    make(map[string]*Class),
-	}
-	loader.loadBasicClasses()
-	loader.loadPrimitiveClasses()
-	return loader
-}
+
 
 func (self *ClassLoader) LoadClass(name string) *Class {
 	if class, ok := self.classMap[name]; ok {
@@ -217,7 +219,7 @@ func initStaticFinalVar(class *Class, field *Field) {
 		case "D":
 			val := cp.GetConstant(cpIndex).(float64)
 			vars.SetDouble(slotId, val)
-		case "Ljava/lang/string;":
+		case "Ljava/lang/String;":
 			goStr := cp.GetConstant(cpIndex).(string)
 			jStr := JString(class.Loader(), goStr)
 			vars.SetRef(slotId, jStr)

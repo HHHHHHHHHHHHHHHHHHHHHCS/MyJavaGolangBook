@@ -32,7 +32,7 @@ func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
 	}
 
 	if resolvedMethod.IsProtected() &&
-		resolvedMethod.Class().IsSubClassOf(currentClass) &&
+		resolvedMethod.Class().IsSuperClassOf(currentClass) &&
 		resolvedMethod.Class().GetPackageName() != currentClass.GetPackageName() &&
 		ref.Class() != currentClass &&
 		!ref.Class().IsSubClassOf(currentClass) {

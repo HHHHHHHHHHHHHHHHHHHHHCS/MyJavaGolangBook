@@ -31,25 +31,7 @@ func newMethod(class *Class, cfMethod *classfile.MemberInfo) *Method {
 	return method
 }
 
-func (self *Method) injectCodeAttribute(returnType string) {
-	self.maxStack = 4
-	self.maxLocals = self.argSlotCount
-	switch returnType[0] {
-	case 'V':
-		self.code = []byte{0xfe, 0xb1} //return
-	case 'D':
-		self.code = []byte{0xfe, 0xaf} //dreturn
-	case 'F':
-		self.code = []byte{0xfe, 0xae} //freturn
-	case 'J':
-		self.code = []byte{0xfe, 0xad} //lreturn
-	case 'L', '[':
-		self.code = []byte{0xfe, 0xb0} //areturn
-	default:
-		self.code = []byte{0xfe, 0xac} //ireturn
 
-	}
-}
 
 func (self *Method) copyAttributes(cfMethod *classfile.MemberInfo) {
 	if codeAttr := cfMethod.CodeAttribute(); codeAttr != nil {
@@ -69,6 +51,27 @@ func (self *Method) calcArgSlotCount(paramTypes []string) {
 
 	if !self.IsStatic() {
 		self.argSlotCount++
+	}
+}
+
+func (self *Method) injectCodeAttribute(returnType string) {
+	self.maxStack = 4
+	self.maxLocals = self.argSlotCount
+	switch returnType[0] {
+	case 'V':
+		self.code = []byte{0xfe, 0xb1} //return
+	case 'L', '[':
+		self.code = []byte{0xfe, 0xb0} //areturn
+	case 'D':
+		self.code = []byte{0xfe, 0xaf} //dreturn
+	case 'F':
+		self.code = []byte{0xfe, 0xae} //freturn
+	case 'J':
+		self.code = []byte{0xfe, 0xad} //lreturn
+
+	default:
+		self.code = []byte{0xfe, 0xac} //ireturn
+
 	}
 }
 

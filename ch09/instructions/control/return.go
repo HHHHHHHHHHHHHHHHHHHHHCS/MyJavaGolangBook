@@ -17,8 +17,8 @@ func (self *ARETURN) Execute(frame *rtda.Frame) {
 	thread := frame.Thread()
 	currentFrame := thread.PopFrame()
 	invokerFrame := thread.TopFrame()
-	retVal := currentFrame.OperandStack().PopRef()
-	invokerFrame.OperandStack().PushRef(retVal)
+	ref := currentFrame.OperandStack().PopRef()
+	invokerFrame.OperandStack().PushRef(ref)
 }
 
 type DRETURN struct{ base.NoOperandsInstruction } //return double
@@ -27,8 +27,8 @@ func (self *DRETURN) Execute(frame *rtda.Frame) {
 	thread := frame.Thread()
 	currentFrame := thread.PopFrame()
 	invokerFrame := thread.TopFrame()
-	retVal := currentFrame.OperandStack().PopDouble()
-	invokerFrame.OperandStack().PushDouble(retVal)
+	val := currentFrame.OperandStack().PopDouble()
+	invokerFrame.OperandStack().PushDouble(val)
 }
 
 type FRETURN struct{ base.NoOperandsInstruction } //return float
@@ -37,8 +37,8 @@ func (self *FRETURN) Execute(frame *rtda.Frame) {
 	thread := frame.Thread()
 	currentFrame := thread.PopFrame()
 	invokerFrame := thread.TopFrame()
-	retVal := currentFrame.OperandStack().PopFloat()
-	invokerFrame.OperandStack().PushFloat(retVal)
+	val := currentFrame.OperandStack().PopFloat()
+	invokerFrame.OperandStack().PushFloat(val)
 }
 
 type IRETURN struct{ base.NoOperandsInstruction } //return int
@@ -47,8 +47,8 @@ func (self *IRETURN) Execute(frame *rtda.Frame) {
 	thread := frame.Thread()
 	currentFrame := thread.PopFrame()
 	invokerFrame := thread.TopFrame()
-	retVal := currentFrame.OperandStack().PopInt()
-	invokerFrame.OperandStack().PushInt(retVal)
+	val := currentFrame.OperandStack().PopInt()
+	invokerFrame.OperandStack().PushInt(val)
 }
 
 type LRETURN struct{ base.NoOperandsInstruction } //return long
@@ -57,6 +57,6 @@ func (self *LRETURN) Execute(frame *rtda.Frame) {
 	thread := frame.Thread()
 	currentFrame := thread.PopFrame()
 	invokerFrame := thread.TopFrame()
-	retVal := currentFrame.OperandStack().PopLong()
-	invokerFrame.OperandStack().PushLong(retVal)
+	val := currentFrame.OperandStack().PopLong()
+	invokerFrame.OperandStack().PushLong(val)
 }

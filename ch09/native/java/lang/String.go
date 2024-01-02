@@ -9,7 +9,7 @@ import (
 const jlString = "java/lang/String"
 
 func init() {
-	native.Register("java/lang/String", "intern", "()Ljava/lang/String;", intern)
+	native.Register(jlString, "intern", "()Ljava/lang/String;", intern)
 }
 
 func intern(frame *rtda.Frame) {

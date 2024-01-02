@@ -51,7 +51,7 @@ func (self *Object) ArrayLength() int32 {
 	case []*Object:
 		return int32(len(self.data.([]*Object)))
 	default:
-		panic("Not Array")
+		panic("Not array!")
 	}
 }
 

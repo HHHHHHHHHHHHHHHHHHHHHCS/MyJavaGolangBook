@@ -19,16 +19,16 @@ func JString(loader *ClassLoader, goStr string) *Object {
 	return jStr
 }
 
-func stringToUtf16(s string) []uint16 {
-	runes := []rune(s) //utf32
-	return utf16.Encode(runes)
-}
 
 func GoString(jStr *Object) string {
 	charArr := jStr.GetRefVar("value", "[C")
 	return utf16ToString(charArr.Chars())
 }
 
+func stringToUtf16(s string) []uint16 {
+	runes := []rune(s) //utf32
+	return utf16.Encode(runes)
+}
 func utf16ToString(s []uint16) string {
 	runes := utf16.Decode(s)
 	return string(runes)
