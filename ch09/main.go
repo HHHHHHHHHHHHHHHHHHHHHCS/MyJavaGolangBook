@@ -7,8 +7,7 @@ import (
 )
 import "strings"
 
-// -Xjre "D:\java-se-8u43-ri\jre" java_test.BubbleSortTest
-// -Xjre "D:\java-se-8u43-ri\jre" java_test.HelloWorld chi fan 吃饭, 饿了!
+// -Xjre "D:\java-se-8u43-ri\jre" java_test.TestString
 func main() {
 	cmd := parseCmd()
 
