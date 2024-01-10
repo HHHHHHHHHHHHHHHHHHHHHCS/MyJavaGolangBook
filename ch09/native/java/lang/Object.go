@@ -11,8 +11,7 @@ const jlObject = "java/lang/Object"
 func init() {
 	native.Register(jlObject, "getClass", "()Ljava/lang/Class;", getClass)
 	native.Register(jlObject, "hashCode", "()I", hashcode)
-	native.Register(jlObject, "clone", "()Ljava/lang/Object", clone)
-
+	native.Register(jlObject, "clone", "()Ljava/lang/Object;", clone)
 }
 
 func getClass(frame *rtda.Frame) {
@@ -35,6 +34,5 @@ func clone(frame *rtda.Frame) {
 		panic("java.lang.CloneNotSupportedException")
 	}
 
-	//TODO:
-	//frame.OperandStack().PushRef(this.Clone())
+	frame.OperandStack().PushRef(this.Clone())
 }
