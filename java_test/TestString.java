@@ -1,5 +1,8 @@
 package java_test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestString implements Cloneable {
     public double pi = 3.14;
 
@@ -41,5 +44,16 @@ public class TestString implements Cloneable {
         System.out.println(c1.pi);
         System.out.println(c2.pi);
         System.out.println(c3.pi);
+        
+        System.out.println("===========================");
+        
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        System.out.println(list.toString());
+        for(int item : list){
+            System.out.println(item);
+        }
     }
 }

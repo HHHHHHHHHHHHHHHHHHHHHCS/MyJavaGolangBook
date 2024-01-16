@@ -4,6 +4,7 @@ import (
 	"MyJavaGolangBook/ch09/instructions/base"
 	"MyJavaGolangBook/ch09/native"
 	_ "MyJavaGolangBook/ch09/native/java/lang"
+	_ "MyJavaGolangBook/ch09/native/sun/misc"
 	"MyJavaGolangBook/ch09/rtda"
 )
 
