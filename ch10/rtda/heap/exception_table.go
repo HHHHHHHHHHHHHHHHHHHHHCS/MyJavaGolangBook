@@ -45,4 +45,5 @@ func (self ExceptionTable) findExceptionHandler(exClass *Class,
 			}
 		}
 	}
+	return nil
 }
