@@ -106,11 +106,9 @@ func (self *ClassFile) Fields() []*MemberInfo {
 func (self *ClassFile) Methods() []*MemberInfo {
 	return self.methods
 }
-
 func (self *ClassFile) ClassName() string {
 	return self.constantPool.getClassName(self.thisClass)
 }
-
 func (self *ClassFile) SuperClassName() string {
 	if self.superClass > 0 {
 		return self.constantPool.getClassName(self.superClass)
@@ -124,4 +122,14 @@ func (self *ClassFile) InterfaceNames() []string {
 		interfaceNames[i] = self.constantPool.getClassName(cpIndex)
 	}
 	return interfaceNames
+}
+
+func (self *ClassFile) SourceFileAttribute() *SourceFileAttribute {
+	for _, attrInfo := range self.attributes {
+		switch attrInfo.(type) {
+		case *SourceFileAttribute:
+			return attrInfo.(*SourceFileAttribute)
+		}
+	}
+	return nil
 }

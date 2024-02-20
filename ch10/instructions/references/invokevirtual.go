@@ -28,6 +28,12 @@ func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
 			return
 		}
 
+		// hack!
+		if methodRef.Name() == "digit" {
+			_digit(frame.OperandStack(), methodRef.Descriptor())
+			return
+		}
+
 		panic("java.lang.NullPointerException")
 	}
 
@@ -71,4 +77,19 @@ func _println(stack *rtda.OperandStack, descriptor string) {
 		panic("println: " + descriptor)
 	}
 	stack.PopRef()
+}
+
+// hack!
+func _digit(stack *rtda.OperandStack, descriptor string) {
+	switch descriptor {
+	case "(II)I":
+		stack.PopInt() //radix 默认十进制不用管
+		stack.PopInt() //char1
+		char0 := stack.PopInt()
+		if char0 < '0' || char0 > '9' {
+			panic("digit fail!")
+		} else {
+			stack.PushInt(char0 - '0')
+		}
+	}
 }

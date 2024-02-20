@@ -7,7 +7,7 @@ import (
 )
 import "strings"
 
-// -Xjre "D:\java-se-8u43-ri\jre" java_test.TestString
+// -Xjre "D:\java-se-8u43-ri\jre" java_test.ParseIntTest 123
 func main() {
 	cmd := parseCmd()
 

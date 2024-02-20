@@ -46,7 +46,6 @@ func distanceToObject(class *heap.Class) int {
 	return distance
 }
 
-// TODO:
 func createStackTraceElement(frame *rtda.Frame) *StackTraceElement {
 	method := frame.Method()
 	class := method.Class()
