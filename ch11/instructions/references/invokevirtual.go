@@ -1,14 +1,11 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-	"MyJavaGolangBook/ch11/rtda/heap"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
+import "MyJavaGolangBook/ch11/rtda/heap"
 
-type INVOKE_VIRTUAL struct {
-	base.Index16Instruction
-}
+// Invoke instance method; dispatch based on class
+type INVOKE_VIRTUAL struct{ base.Index16Instruction }
 
 func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
 	currentClass := frame.Method().Class()
@@ -21,13 +18,6 @@ func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
 
 	ref := frame.OperandStack().GetRefFromTop(resolvedMethod.ArgSlotCount() - 1)
 	if ref == nil {
-
-		// hack!
-		if methodRef.Name() == "digit" {
-			_digit(frame.OperandStack(), methodRef.Descriptor())
-			return
-		}
-
 		panic("java.lang.NullPointerException")
 	}
 
@@ -49,19 +39,4 @@ func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
 	}
 
 	base.InvokeMethod(frame, methodToBeInvoked)
-}
-
-// hack!
-func _digit(stack *rtda.OperandStack, descriptor string) {
-	switch descriptor {
-	case "(II)I":
-		stack.PopInt() //radix 默认十进制不用管
-		stack.PopInt() //char1
-		char0 := stack.PopInt()
-		if char0 < '0' || char0 > '9' {
-			panic("digit fail!")
-		} else {
-			stack.PushInt(char0 - '0')
-		}
-	}
 }

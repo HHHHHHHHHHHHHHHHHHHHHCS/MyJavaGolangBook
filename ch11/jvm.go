@@ -1,13 +1,11 @@
 package main
 
-import (
-	"MyJavaGolangBook/ch11/classpath"
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-	"MyJavaGolangBook/ch11/rtda/heap"
-	"fmt"
-	"strings"
-)
+import "fmt"
+import "strings"
+import "MyJavaGolangBook/ch11/classpath"
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
+import "MyJavaGolangBook/ch11/rtda/heap"
 
 type JVM struct {
 	cmd         *Cmd
@@ -24,6 +22,7 @@ func newJVM(cmd *Cmd) *JVM {
 		mainThread:  rtda.NewThread(),
 	}
 }
+
 func (self *JVM) start() {
 	self.initVM()
 	self.execMain()
@@ -40,12 +39,13 @@ func (self *JVM) execMain() {
 	mainClass := self.classLoader.LoadClass(className)
 	mainMethod := mainClass.GetMainMethod()
 	if mainMethod == nil {
-		fmt.Println("Main method not found in class %s\n", self.cmd.class)
+		fmt.Printf("Main method not found in class %s\n", self.cmd.class)
 		return
 	}
+
 	argsArr := self.createArgsArray()
 	frame := self.mainThread.NewFrame(mainMethod)
-	frame.LocalVars().SetRef(0, argsArr) // 给main方法传递args参数
+	frame.LocalVars().SetRef(0, argsArr)
 	self.mainThread.PushFrame(frame)
 	interpret(self.mainThread, self.cmd.verboseInstFlag)
 }

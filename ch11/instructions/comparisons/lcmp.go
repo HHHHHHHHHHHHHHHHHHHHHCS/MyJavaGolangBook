@@ -1,13 +1,10 @@
 package comparisons
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
 
-type LCMP struct {
-	base.NoOperandsInstruction
-}
+// Compare long
+type LCMP struct{ base.NoOperandsInstruction }
 
 func (self *LCMP) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

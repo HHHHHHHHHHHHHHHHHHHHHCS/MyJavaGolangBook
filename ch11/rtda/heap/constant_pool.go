@@ -1,9 +1,7 @@
 package heap
 
-import (
-	"MyJavaGolangBook/ch11/classfile"
-	"fmt"
-)
+import "fmt"
+import "MyJavaGolangBook/ch11/classfile"
 
 type Constant interface{}
 

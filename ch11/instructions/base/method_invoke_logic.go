@@ -1,11 +1,9 @@
 package base
 
-import (
-	"MyJavaGolangBook/ch11/rtda"
-	"MyJavaGolangBook/ch11/rtda/heap"
-	"fmt"
-	"strings"
-)
+import "fmt"
+import "strings"
+import "MyJavaGolangBook/ch11/rtda"
+import "MyJavaGolangBook/ch11/rtda/heap"
 
 func InvokeMethod(invokerFrame *rtda.Frame, method *heap.Method) {
 	//_logInvoke(callerFrame.Thread().StackDepth(), method)

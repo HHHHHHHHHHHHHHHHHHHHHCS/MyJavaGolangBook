@@ -1,13 +1,10 @@
 package stack
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
 
-type SWAP struct {
-	base.NoOperandsInstruction
-}
+// Swap the top two operand stack values
+type SWAP struct{ base.NoOperandsInstruction }
 
 func (self *SWAP) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

@@ -1,22 +1,18 @@
 package constants
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-	"MyJavaGolangBook/ch11/rtda/heap"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
+import "MyJavaGolangBook/ch11/rtda/heap"
 
-type LDC struct {
-	base.Index8Instruction
-}
+// Push item from run-time constant pool
+type LDC struct{ base.Index8Instruction }
 
 func (self *LDC) Execute(frame *rtda.Frame) {
 	_ldc(frame, self.Index)
 }
 
-type LDC_W struct {
-	base.Index16Instruction
-}
+// Push item from run-time constant pool (wide index)
+type LDC_W struct{ base.Index16Instruction }
 
 func (self *LDC_W) Execute(frame *rtda.Frame) {
 	_ldc(frame, self.Index)
@@ -39,14 +35,14 @@ func _ldc(frame *rtda.Frame, index uint) {
 		classRef := c.(*heap.ClassRef)
 		classObj := classRef.ResolvedClass().JClass()
 		stack.PushRef(classObj)
+	// case MethodType, MethodHandle
 	default:
 		panic("todo: ldc!")
 	}
 }
 
-type LDC2_W struct {
-	base.Index16Instruction
-}
+// Push long or double from run-time constant pool (wide index)
+type LDC2_W struct{ base.Index16Instruction }
 
 func (self *LDC2_W) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

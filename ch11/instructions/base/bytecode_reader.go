@@ -49,8 +49,7 @@ func (self *BytecodeReader) ReadInt32s(n int32) []int32 {
 	return ints
 }
 
-
-// 在操作码后面加 0~3的padding 保证在地址是4的倍数
+// used by lookupswitch and tableswitch
 func (self *BytecodeReader) SkipPadding() {
 	for self.pc%4 != 0 {
 		self.ReadUint8()

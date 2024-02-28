@@ -20,10 +20,10 @@ func lookupMethodInInterfaces(ifaces []*Class, name, descriptor string) *Method 
 		}
 
 		method := lookupMethodInInterfaces(iface.interfaces, name, descriptor)
-
 		if method != nil {
 			return method
 		}
 	}
+
 	return nil
 }

@@ -1,10 +1,9 @@
 package base
 
-import (
-	"MyJavaGolangBook/ch11/rtda"
-	"MyJavaGolangBook/ch11/rtda/heap"
-)
+import "MyJavaGolangBook/ch11/rtda"
+import "MyJavaGolangBook/ch11/rtda/heap"
 
+// jvms 5.5
 func InitClass(thread *rtda.Thread, class *heap.Class) {
 	class.StartInit()
 	scheduleClinit(thread, class)
@@ -14,6 +13,7 @@ func InitClass(thread *rtda.Thread, class *heap.Class) {
 func scheduleClinit(thread *rtda.Thread, class *heap.Class) {
 	clinit := class.GetClinitMethod()
 	if clinit != nil && clinit.Class() == class {
+		// exec <clinit>
 		newFrame := thread.NewFrame(clinit)
 		thread.PushFrame(newFrame)
 	}

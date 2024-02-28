@@ -8,9 +8,11 @@ type Instruction interface {
 }
 
 type NoOperandsInstruction struct {
+	// empty
 }
 
 func (self *NoOperandsInstruction) FetchOperands(reader *BytecodeReader) {
+	// nothing to do
 }
 
 type BranchInstruction struct {

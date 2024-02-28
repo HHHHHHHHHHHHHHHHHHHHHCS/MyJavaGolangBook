@@ -1,17 +1,17 @@
 package control
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
 
-type RETURN struct{ base.NoOperandsInstruction } //return void
+// Return void from method
+type RETURN struct{ base.NoOperandsInstruction }
 
 func (self *RETURN) Execute(frame *rtda.Frame) {
 	frame.Thread().PopFrame()
 }
 
-type ARETURN struct{ base.NoOperandsInstruction } //return ref
+// Return reference from method
+type ARETURN struct{ base.NoOperandsInstruction }
 
 func (self *ARETURN) Execute(frame *rtda.Frame) {
 	thread := frame.Thread()
@@ -21,7 +21,8 @@ func (self *ARETURN) Execute(frame *rtda.Frame) {
 	invokerFrame.OperandStack().PushRef(ref)
 }
 
-type DRETURN struct{ base.NoOperandsInstruction } //return double
+// Return double from method
+type DRETURN struct{ base.NoOperandsInstruction }
 
 func (self *DRETURN) Execute(frame *rtda.Frame) {
 	thread := frame.Thread()
@@ -31,7 +32,8 @@ func (self *DRETURN) Execute(frame *rtda.Frame) {
 	invokerFrame.OperandStack().PushDouble(val)
 }
 
-type FRETURN struct{ base.NoOperandsInstruction } //return float
+// Return float from method
+type FRETURN struct{ base.NoOperandsInstruction }
 
 func (self *FRETURN) Execute(frame *rtda.Frame) {
 	thread := frame.Thread()
@@ -41,7 +43,8 @@ func (self *FRETURN) Execute(frame *rtda.Frame) {
 	invokerFrame.OperandStack().PushFloat(val)
 }
 
-type IRETURN struct{ base.NoOperandsInstruction } //return int
+// Return int from method
+type IRETURN struct{ base.NoOperandsInstruction }
 
 func (self *IRETURN) Execute(frame *rtda.Frame) {
 	thread := frame.Thread()
@@ -51,7 +54,8 @@ func (self *IRETURN) Execute(frame *rtda.Frame) {
 	invokerFrame.OperandStack().PushInt(val)
 }
 
-type LRETURN struct{ base.NoOperandsInstruction } //return long
+// Return double from method
+type LRETURN struct{ base.NoOperandsInstruction }
 
 func (self *LRETURN) Execute(frame *rtda.Frame) {
 	thread := frame.Thread()

@@ -1,9 +1,7 @@
 package instructions
 
-import (
-	"fmt"
-)
-import . "MyJavaGolangBook/ch11/instructions/base"
+import "fmt"
+import "MyJavaGolangBook/ch11/instructions/base"
 import . "MyJavaGolangBook/ch11/instructions/comparisons"
 import . "MyJavaGolangBook/ch11/instructions/constants"
 import . "MyJavaGolangBook/ch11/instructions/control"
@@ -12,10 +10,11 @@ import . "MyJavaGolangBook/ch11/instructions/extended"
 import . "MyJavaGolangBook/ch11/instructions/loads"
 import . "MyJavaGolangBook/ch11/instructions/math"
 import . "MyJavaGolangBook/ch11/instructions/references"
+import . "MyJavaGolangBook/ch11/instructions/reserved"
 import . "MyJavaGolangBook/ch11/instructions/stack"
 import . "MyJavaGolangBook/ch11/instructions/stores"
-import . "MyJavaGolangBook/ch11/instructions/reserved"
 
+// NoOperandsInstruction singletons
 var (
 	nop           = &NOP{}
 	aconst_null   = &ACONST_NULL{}
@@ -167,7 +166,7 @@ var (
 	invoke_native = &INVOKE_NATIVE{}
 )
 
-func NewInstruction(opcode byte) Instruction {
+func NewInstruction(opcode byte) base.Instruction {
 	switch opcode {
 	case 0x00:
 		return nop

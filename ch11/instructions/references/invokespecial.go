@@ -1,14 +1,12 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-	"MyJavaGolangBook/ch11/rtda/heap"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
+import "MyJavaGolangBook/ch11/rtda/heap"
 
-type INVOKE_SPECIAL struct {
-	base.Index16Instruction
-}
+// Invoke instance method;
+// special handling for superclass, private, and instance initialization method invocations
+type INVOKE_SPECIAL struct{ base.Index16Instruction }
 
 func (self *INVOKE_SPECIAL) Execute(frame *rtda.Frame) {
 	currentClass := frame.Method().Class()

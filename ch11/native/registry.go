@@ -1,15 +1,13 @@
 package native
 
-import (
-	"MyJavaGolangBook/ch11/rtda"
-)
+import "MyJavaGolangBook/ch11/rtda"
 
 type NativeMethod func(frame *rtda.Frame)
 
 var registry = map[string]NativeMethod{}
 
 func emptyNativeMethod(frame *rtda.Frame) {
-	// do nothing  避免循环调用
+	// do nothing
 }
 
 func Register(className, methodName, methodDescriptor string, method NativeMethod) {

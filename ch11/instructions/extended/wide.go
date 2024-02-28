@@ -1,13 +1,12 @@
 package extended
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/instructions/loads"
-	"MyJavaGolangBook/ch11/instructions/math"
-	"MyJavaGolangBook/ch11/instructions/stores"
-	"MyJavaGolangBook/ch11/rtda"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/instructions/loads"
+import "MyJavaGolangBook/ch11/instructions/math"
+import "MyJavaGolangBook/ch11/instructions/stores"
+import "MyJavaGolangBook/ch11/rtda"
 
+// Extend local variable index by additional bytes
 type WIDE struct {
 	modifiedInstruction base.Instruction
 }
@@ -60,7 +59,7 @@ func (self *WIDE) FetchOperands(reader *base.BytecodeReader) {
 		inst.Index = uint(reader.ReadUint16())
 		inst.Const = int32(reader.ReadInt16())
 		self.modifiedInstruction = inst
-	case 0xa9:
+	case 0xa9: // ret
 		panic("Unsupported opcode: 0xa9!")
 	}
 }

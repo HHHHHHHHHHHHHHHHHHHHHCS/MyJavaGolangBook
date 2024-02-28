@@ -1,15 +1,15 @@
 package misc
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/native"
-	"MyJavaGolangBook/ch11/rtda"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/native"
+import "MyJavaGolangBook/ch11/rtda"
 
 func init() {
 	native.Register("sun/misc/VM", "initialize", "()V", initialize)
 }
 
+// private static native void initialize();
+// ()V
 func initialize(frame *rtda.Frame) {
 	classLoader := frame.Method().Class().Loader()
 	jlSysClass := classLoader.LoadClass("java/lang/System")

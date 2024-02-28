@@ -1,14 +1,11 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-	"MyJavaGolangBook/ch11/rtda/heap"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
+import "MyJavaGolangBook/ch11/rtda/heap"
 
-type ANEW_ARRAY struct {
-	base.Index16Instruction
-}
+// Create new array of reference
+type ANEW_ARRAY struct{ base.Index16Instruction }
 
 func (self *ANEW_ARRAY) Execute(frame *rtda.Frame) {
 	cp := frame.Method().Class().ConstantPool()

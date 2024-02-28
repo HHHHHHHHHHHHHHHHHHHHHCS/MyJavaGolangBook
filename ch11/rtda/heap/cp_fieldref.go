@@ -1,8 +1,6 @@
 package heap
 
-import (
-	"MyJavaGolangBook/ch11/classfile"
-)
+import "MyJavaGolangBook/ch11/classfile"
 
 type FieldRef struct {
 	MemberRef
@@ -23,6 +21,7 @@ func (self *FieldRef) ResolvedField() *Field {
 	return self.field
 }
 
+// jvms 5.4.3.2
 func (self *FieldRef) resolveFieldRef() {
 	d := self.cp.class
 	c := self.ResolvedClass()
@@ -54,5 +53,6 @@ func lookupField(c *Class, name, descriptor string) *Field {
 	if c.superClass != nil {
 		return lookupField(c.superClass, name, descriptor)
 	}
+
 	return nil
 }

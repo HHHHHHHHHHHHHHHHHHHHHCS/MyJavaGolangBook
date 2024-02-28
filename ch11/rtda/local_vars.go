@@ -1,9 +1,7 @@
 package rtda
 
-import (
-	"MyJavaGolangBook/ch11/rtda/heap"
-	"math"
-)
+import "math"
+import "MyJavaGolangBook/ch11/rtda/heap"
 
 type LocalVars []Slot
 

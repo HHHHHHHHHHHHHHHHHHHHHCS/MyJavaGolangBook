@@ -1,9 +1,7 @@
 package conversions
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
 
 // Convert double to float
 type D2F struct{ base.NoOperandsInstruction }

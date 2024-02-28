@@ -1,20 +1,17 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-	"MyJavaGolangBook/ch11/rtda/heap"
-	"reflect"
-)
+import "reflect"
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
+import "MyJavaGolangBook/ch11/rtda/heap"
 
-type ATHROW struct {
-	base.NoOperandsInstruction
-}
+// Throw exception or error
+type ATHROW struct{ base.NoOperandsInstruction }
 
 func (self *ATHROW) Execute(frame *rtda.Frame) {
 	ex := frame.OperandStack().PopRef()
 	if ex == nil {
-		panic("java.lang.NullPointException")
+		panic("java.lang.NullPointerException")
 	}
 
 	thread := frame.Thread()

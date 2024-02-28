@@ -1,9 +1,7 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
 
 // Enter monitor for object
 type MONITOR_ENTER struct{ base.NoOperandsInstruction }

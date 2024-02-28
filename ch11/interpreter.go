@@ -1,26 +1,13 @@
 package main
 
-import (
-	"MyJavaGolangBook/ch11/instructions"
-	"MyJavaGolangBook/ch11/rtda/heap"
-	"fmt"
-)
+import "fmt"
+import "MyJavaGolangBook/ch11/instructions"
 import "MyJavaGolangBook/ch11/instructions/base"
 import "MyJavaGolangBook/ch11/rtda"
 
 func interpret(thread *rtda.Thread, logInst bool) {
 	defer catchErr(thread)
 	loop(thread, logInst)
-}
-
-func createArgsArray(loader *heap.ClassLoader, args []string) *heap.Object {
-	stringClass := loader.LoadClass("java/lang/String")
-	argsArr := stringClass.ArrayClass().NewArray(uint(len(args)))
-	jArgs := argsArr.Refs()
-	for i, arg := range args {
-		jArgs[i] = heap.JString(loader, arg)
-	}
-	return argsArr
 }
 
 func catchErr(thread *rtda.Thread) {
@@ -48,6 +35,7 @@ func loop(thread *rtda.Thread, logInst bool) {
 			logInstruction(frame, inst)
 		}
 
+		// execute
 		inst.Execute(frame)
 		if thread.IsStackEmpty() {
 			break
@@ -60,8 +48,7 @@ func logInstruction(frame *rtda.Frame, inst base.Instruction) {
 	className := method.Class().Name()
 	methodName := method.Name()
 	pc := frame.Thread().PC()
-	fmt.Printf("%v.%v() #%2d %T %v\n",
-		className, methodName, pc, inst, inst)
+	fmt.Printf("%v.%v() #%2d %T %v\n", className, methodName, pc, inst, inst)
 }
 
 func logFrames(thread *rtda.Thread) {
@@ -69,7 +56,8 @@ func logFrames(thread *rtda.Thread) {
 		frame := thread.PopFrame()
 		method := frame.Method()
 		className := method.Class().Name()
-		fmt.Printf(">> pc: %4d %v.%v%v \n",
-			frame.NextPC(), className, method.Name(), method.Descriptor())
+		lineNum := method.GetLineNumber(frame.NextPC())
+		fmt.Printf(">> line:%4d pc:%4d %v.%v%v \n",
+			lineNum, frame.NextPC(), className, method.Name(), method.Descriptor())
 	}
 }

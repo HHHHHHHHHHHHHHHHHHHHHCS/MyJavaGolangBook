@@ -1,9 +1,7 @@
 package conversions
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
 
 // Convert long to double
 type L2D struct{ base.NoOperandsInstruction }

@@ -1,12 +1,10 @@
 package io
 
-import (
-	"MyJavaGolangBook/ch11/native"
-	"MyJavaGolangBook/ch11/rtda"
-	"MyJavaGolangBook/ch11/rtda/heap"
-	"path/filepath"
-)
+import "path/filepath"
 import "os"
+import "MyJavaGolangBook/ch11/native"
+import "MyJavaGolangBook/ch11/rtda"
+import "MyJavaGolangBook/ch11/rtda/heap"
 
 const unixfs = "java/io/UnixFileSystem"
 

@@ -29,7 +29,6 @@ func (self *MethodDescriptorParser) startParams() {
 		self.causePanic()
 	}
 }
-
 func (self *MethodDescriptorParser) endParams() {
 	if self.readUint8() != ')' {
 		self.causePanic()
@@ -50,7 +49,6 @@ func (self *MethodDescriptorParser) readUint8() uint8 {
 	self.offset++
 	return b
 }
-
 func (self *MethodDescriptorParser) unreadUint8() {
 	self.offset--
 }

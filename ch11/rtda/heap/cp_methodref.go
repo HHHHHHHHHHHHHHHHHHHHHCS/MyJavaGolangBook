@@ -21,6 +21,7 @@ func (self *MethodRef) ResolvedMethod() *Method {
 	return self.method
 }
 
+// jvms8 5.4.3.3
 func (self *MethodRef) resolveMethodRef() {
 	d := self.cp.class
 	c := self.ResolvedClass()
@@ -35,6 +36,7 @@ func (self *MethodRef) resolveMethodRef() {
 	if !method.isAccessibleTo(d) {
 		panic("java.lang.IllegalAccessError")
 	}
+
 	self.method = method
 }
 

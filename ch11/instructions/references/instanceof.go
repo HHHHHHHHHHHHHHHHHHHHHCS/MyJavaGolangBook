@@ -1,14 +1,11 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-	"MyJavaGolangBook/ch11/rtda/heap"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
+import "MyJavaGolangBook/ch11/rtda/heap"
 
-type INSTANCE_OF struct {
-	base.Index16Instruction
-}
+// Determine if object is of given type
+type INSTANCE_OF struct{ base.Index16Instruction }
 
 func (self *INSTANCE_OF) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

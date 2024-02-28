@@ -1,14 +1,11 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-	"MyJavaGolangBook/ch11/rtda/heap"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
+import "MyJavaGolangBook/ch11/rtda/heap"
 
-type GET_STATIC struct {
-	base.Index16Instruction
-}
+// Get static field from class
+type GET_STATIC struct{ base.Index16Instruction }
 
 func (self *GET_STATIC) Execute(frame *rtda.Frame) {
 	cp := frame.Method().Class().ConstantPool()

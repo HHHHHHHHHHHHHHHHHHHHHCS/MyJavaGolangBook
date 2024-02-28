@@ -1,9 +1,7 @@
 package io
 
-import (
-	"MyJavaGolangBook/ch11/native"
-	"MyJavaGolangBook/ch11/rtda"
-)
+import "MyJavaGolangBook/ch11/native"
+import "MyJavaGolangBook/ch11/rtda"
 
 const fd = "java/io/FileDescriptor"
 

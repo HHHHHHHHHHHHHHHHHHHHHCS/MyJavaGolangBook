@@ -1,9 +1,7 @@
 package math
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
 
 // Boolean AND int
 type IAND struct{ base.NoOperandsInstruction }

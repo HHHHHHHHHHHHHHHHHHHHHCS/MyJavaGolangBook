@@ -1,9 +1,7 @@
 package heap
 
-import (
-	"MyJavaGolangBook/ch11/classfile"
-	"strings"
-)
+import "strings"
+import "MyJavaGolangBook/ch11/classfile"
 
 // name, superClassName and interfaceNames are all binary names(jvms8-4.2.1)
 type Class struct {

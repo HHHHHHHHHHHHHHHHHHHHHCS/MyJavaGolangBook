@@ -1,14 +1,11 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-	"MyJavaGolangBook/ch11/rtda/heap"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
+import "MyJavaGolangBook/ch11/rtda/heap"
 
-type PUT_FIELD struct {
-	base.Index16Instruction
-}
+// Set field in object
+type PUT_FIELD struct{ base.Index16Instruction }
 
 func (self *PUT_FIELD) Execute(frame *rtda.Frame) {
 	currentMethod := frame.Method()
@@ -20,7 +17,6 @@ func (self *PUT_FIELD) Execute(frame *rtda.Frame) {
 	if field.IsStatic() {
 		panic("java.lang.IncompatibleClassChangeError")
 	}
-
 	if field.IsFinal() {
 		if currentClass != field.Class() || currentMethod.Name() != "<init>" {
 			panic("java.lang.IllegalAccessError")
@@ -67,5 +63,7 @@ func (self *PUT_FIELD) Execute(frame *rtda.Frame) {
 			panic("java.lang.NullPointerException")
 		}
 		ref.Fields().SetRef(slotId, val)
+	default:
+		// todo
 	}
 }

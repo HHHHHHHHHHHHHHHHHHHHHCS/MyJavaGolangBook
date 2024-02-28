@@ -1,22 +1,18 @@
 package stack
 
-import (
-	"MyJavaGolangBook/ch11/instructions/base"
-	"MyJavaGolangBook/ch11/rtda"
-)
+import "MyJavaGolangBook/ch11/instructions/base"
+import "MyJavaGolangBook/ch11/rtda"
 
-type POP struct {
-	base.NoOperandsInstruction
-}
+// Pop the top operand stack value
+type POP struct{ base.NoOperandsInstruction }
 
 func (self *POP) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	stack.PopSlot()
 }
 
-type POP2 struct {
-	base.NoOperandsInstruction
-}
+// Pop the top one or two operand stack values
+type POP2 struct{ base.NoOperandsInstruction }
 
 func (self *POP2) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
