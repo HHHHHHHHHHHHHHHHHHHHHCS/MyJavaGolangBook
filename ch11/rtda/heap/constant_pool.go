@@ -12,13 +12,13 @@ type ConstantPool struct {
 	consts []Constant
 }
 
-func newConstantPool(class *Class, cfCP classfile.ConstantPool) *ConstantPool {
-	cpCount := len(cfCP)
+func newConstantPool(class *Class, cfCp classfile.ConstantPool) *ConstantPool {
+	cpCount := len(cfCp)
 	consts := make([]Constant, cpCount)
 	rtCp := &ConstantPool{class, consts}
 
 	for i := 1; i < cpCount; i++ {
-		cpInfo := cfCP[i]
+		cpInfo := cfCp[i]
 		switch cpInfo.(type) {
 		case *classfile.ConstantIntegerInfo:
 			intInfo := cpInfo.(*classfile.ConstantIntegerInfo)

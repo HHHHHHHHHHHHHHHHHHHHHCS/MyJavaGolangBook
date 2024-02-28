@@ -5,6 +5,8 @@ import (
 	"MyJavaGolangBook/ch11/instructions/base"
 	"MyJavaGolangBook/ch11/rtda"
 	"MyJavaGolangBook/ch11/rtda/heap"
+	"fmt"
+	"strings"
 )
 
 type JVM struct {
@@ -33,4 +35,28 @@ func (self *JVM) initVM() {
 	interpret(self.mainThread, self.cmd.verboseInstFlag)
 }
 
-//TODO:
+func (self *JVM) execMain() {
+	className := strings.Replace(self.cmd.class, ".", "/", -1)
+	mainClass := self.classLoader.LoadClass(className)
+	mainMethod := mainClass.GetMainMethod()
+	if mainMethod == nil {
+		fmt.Println("Main method not found in class %s\n", self.cmd.class)
+		return
+	}
+	argsArr := self.createArgsArray()
+	frame := self.mainThread.NewFrame(mainMethod)
+	frame.LocalVars().SetRef(0, argsArr) // 给main方法传递args参数
+	self.mainThread.PushFrame(frame)
+	interpret(self.mainThread, self.cmd.verboseInstFlag)
+}
+
+func (self *JVM) createArgsArray() *heap.Object {
+	stringClass := self.classLoader.LoadClass("java/lang/String")
+	argsLen := uint(len(self.cmd.args))
+	argsArr := stringClass.ArrayClass().NewArray(argsLen)
+	jArgs := argsArr.Refs()
+	for i, arg := range self.cmd.args {
+		jArgs[i] = heap.JString(self.classLoader, arg)
+	}
+	return argsArr
+}

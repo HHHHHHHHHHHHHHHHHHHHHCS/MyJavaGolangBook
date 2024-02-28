@@ -15,6 +15,13 @@ func (self *ANEW_ARRAY) Execute(frame *rtda.Frame) {
 	classRef := cp.GetConstant(self.Index).(*heap.ClassRef)
 	componentClass := classRef.ResolvedClass()
 
+	// if componentClass.InitializationNotStarted() {
+	// 	thread := frame.Thread()
+	// 	frame.SetNextPC(thread.PC()) // undo anewarray
+	// 	thread.InitClass(componentClass)
+	// 	return
+	// }
+
 	stack := frame.OperandStack()
 	count := stack.PopInt()
 	if count < 0 {

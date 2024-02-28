@@ -16,7 +16,6 @@ func (self *INVOKE_SPECIAL) Execute(frame *rtda.Frame) {
 	methodRef := cp.GetConstant(self.Index).(*heap.MethodRef)
 	resolvedClass := methodRef.ResolvedClass()
 	resolvedMethod := methodRef.ResolvedMethod()
-
 	if resolvedMethod.Name() == "<init>" && resolvedMethod.Class() != resolvedClass {
 		panic("java.lang.NoSuchMethodError")
 	}
@@ -34,6 +33,7 @@ func (self *INVOKE_SPECIAL) Execute(frame *rtda.Frame) {
 		resolvedMethod.Class().GetPackageName() != currentClass.GetPackageName() &&
 		ref.Class() != currentClass &&
 		!ref.Class().IsSubClassOf(currentClass) {
+
 		panic("java.lang.IllegalAccessError")
 	}
 
@@ -42,12 +42,13 @@ func (self *INVOKE_SPECIAL) Execute(frame *rtda.Frame) {
 		resolvedClass.IsSuperClassOf(currentClass) &&
 		resolvedMethod.Name() != "<init>" {
 
-		methodToBeInvoked = heap.LookupMethodInClass(
-			currentClass.SuperClass(), methodRef.Name(), methodRef.Descriptor())
+		methodToBeInvoked = heap.LookupMethodInClass(currentClass.SuperClass(),
+			methodRef.Name(), methodRef.Descriptor())
 	}
 
 	if methodToBeInvoked == nil || methodToBeInvoked.IsAbstract() {
 		panic("java.lang.AbstractMethodError")
 	}
+
 	base.InvokeMethod(frame, methodToBeInvoked)
 }
