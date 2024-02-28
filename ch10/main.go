@@ -5,11 +5,12 @@ import "strings"
 import "MyJavaGolangBook/ch10/classpath"
 import "MyJavaGolangBook/ch10/rtda/heap"
 
+// -Xjre "D:\java-se-8u43-ri\jre" java_test.ParseIntTest 123
 func main() {
 	cmd := parseCmd()
 
 	if cmd.versionFlag {
-		fmt.Println("version 0.0.1")
+		fmt.Println("version 0.0.10")
 	} else if cmd.helpFlag || cmd.class == "" {
 		printUsage()
 	} else {
