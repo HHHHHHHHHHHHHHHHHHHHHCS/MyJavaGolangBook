@@ -1,14 +1,11 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-	"MyJavaGolangBook/ch10/rtda/heap"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
+import "MyJavaGolangBook/ch10/rtda/heap"
 
-type INVOKE_STATIC struct {
-	base.Index16Instruction
-}
+// Invoke a class (static) method
+type INVOKE_STATIC struct{ base.Index16Instruction }
 
 func (self *INVOKE_STATIC) Execute(frame *rtda.Frame) {
 	cp := frame.Method().Class().ConstantPool()
@@ -26,5 +23,4 @@ func (self *INVOKE_STATIC) Execute(frame *rtda.Frame) {
 	}
 
 	base.InvokeMethod(frame, resolvedMethod)
-
 }

@@ -1,9 +1,7 @@
 package base
 
-import (
-	"MyJavaGolangBook/ch10/rtda"
-	"MyJavaGolangBook/ch10/rtda/heap"
-)
+import "MyJavaGolangBook/ch10/rtda"
+import "MyJavaGolangBook/ch10/rtda/heap"
 
 func InvokeMethod(invokerFrame *rtda.Frame, method *heap.Method) {
 	thread := invokerFrame.Thread()

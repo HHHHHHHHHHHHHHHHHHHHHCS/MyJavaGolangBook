@@ -1,14 +1,11 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-	"MyJavaGolangBook/ch10/rtda/heap"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
+import "MyJavaGolangBook/ch10/rtda/heap"
 
-type PUT_STATIC struct {
-	base.Index16Instruction
-}
+// Set static field in class
+type PUT_STATIC struct{ base.Index16Instruction }
 
 func (self *PUT_STATIC) Execute(frame *rtda.Frame) {
 	currentMethod := frame.Method()
@@ -26,7 +23,6 @@ func (self *PUT_STATIC) Execute(frame *rtda.Frame) {
 	if !field.IsStatic() {
 		panic("java.lang.IncompatibleClassChangeError")
 	}
-
 	if field.IsFinal() {
 		if currentClass != class || currentMethod.Name() != "<clinit>" {
 			panic("java.lang.IllegalAccessError")
@@ -49,5 +45,7 @@ func (self *PUT_STATIC) Execute(frame *rtda.Frame) {
 		slots.SetDouble(slotId, stack.PopDouble())
 	case 'L', '[':
 		slots.SetRef(slotId, stack.PopRef())
+	default:
+		// todo
 	}
 }

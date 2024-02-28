@@ -1,9 +1,7 @@
 package math
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
 
 // Multiply double
 type DMUL struct{ base.NoOperandsInstruction }

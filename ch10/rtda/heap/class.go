@@ -1,18 +1,18 @@
 package heap
 
-import (
-	"MyJavaGolangBook/ch10/classfile"
-	"strings"
-)
+import "strings"
+import "MyJavaGolangBook/ch10/classfile"
 
+// name, superClassName and interfaceNames are all binary names(jvms8-4.2.1)
 type Class struct {
 	accessFlags       uint16
-	name              string // this class name
+	name              string // thisClassName
 	superClassName    string
 	interfaceNames    []string
 	constantPool      *ConstantPool
 	fields            []*Field
 	methods           []*Method
+	sourceFile        string
 	loader            *ClassLoader
 	superClass        *Class
 	interfaces        []*Class
@@ -21,7 +21,6 @@ type Class struct {
 	staticVars        Slots
 	initStarted       bool
 	jClass            *Object
-	sourceFile        string
 }
 
 func newClass(cf *classfile.ClassFile) *Class {
@@ -41,7 +40,7 @@ func getSourceFile(cf *classfile.ClassFile) string {
 	if sfAttr := cf.SourceFileAttribute(); sfAttr != nil {
 		return sfAttr.FileName()
 	}
-	return "Unknown"
+	return "Unknown" // todo
 }
 
 func (self *Class) IsPublic() bool {
@@ -73,40 +72,32 @@ func (self *Class) IsEnum() bool {
 func (self *Class) Name() string {
 	return self.name
 }
-
 func (self *Class) ConstantPool() *ConstantPool {
 	return self.constantPool
 }
-
 func (self *Class) Fields() []*Field {
 	return self.fields
 }
 func (self *Class) Methods() []*Method {
 	return self.methods
 }
-
+func (self *Class) SourceFile() string {
+	return self.sourceFile
+}
 func (self *Class) Loader() *ClassLoader {
 	return self.loader
 }
-
 func (self *Class) SuperClass() *Class {
 	return self.superClass
 }
-
 func (self *Class) StaticVars() Slots {
 	return self.staticVars
 }
-
 func (self *Class) InitStarted() bool {
 	return self.initStarted
 }
-
 func (self *Class) JClass() *Object {
 	return self.jClass
-}
-
-func (self *Class) SourceFile() string {
-	return self.sourceFile
 }
 
 func (self *Class) StartInit() {
@@ -153,6 +144,7 @@ func (self *Class) getField(name, descriptor string, isStatic bool) *Field {
 			if field.IsStatic() == isStatic &&
 				field.name == name &&
 				field.descriptor == descriptor {
+
 				return field
 			}
 		}
@@ -173,6 +165,7 @@ func (self *Class) isJioSerializable() bool {
 func (self *Class) NewObject() *Object {
 	return newObject(self)
 }
+
 func (self *Class) ArrayClass() *Class {
 	arrayClassName := getArrayClassName(self.name)
 	return self.loader.LoadClass(arrayClassName)
@@ -195,7 +188,6 @@ func (self *Class) GetRefVar(fieldName, fieldDescriptor string) *Object {
 	field := self.getField(fieldName, fieldDescriptor, true)
 	return self.staticVars.GetRef(field.slotId)
 }
-
 func (self *Class) SetRefVar(fieldName, fieldDescriptor string, ref *Object) {
 	field := self.getField(fieldName, fieldDescriptor, true)
 	self.staticVars.SetRef(field.slotId, ref)

@@ -1,11 +1,10 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-	"MyJavaGolangBook/ch10/rtda/heap"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
+import "MyJavaGolangBook/ch10/rtda/heap"
 
+// Invoke interface method
 type INVOKE_INTERFACE struct {
 	index uint
 	// count uint8

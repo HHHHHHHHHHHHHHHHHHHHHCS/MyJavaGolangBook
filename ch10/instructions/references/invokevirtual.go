@@ -1,15 +1,12 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-	"MyJavaGolangBook/ch10/rtda/heap"
-	"fmt"
-)
+import "fmt"
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
+import "MyJavaGolangBook/ch10/rtda/heap"
 
-type INVOKE_VIRTUAL struct {
-	base.Index16Instruction
-}
+// Invoke instance method; dispatch based on class
+type INVOKE_VIRTUAL struct{ base.Index16Instruction }
 
 func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
 	currentClass := frame.Method().Class()
@@ -28,12 +25,6 @@ func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
 			return
 		}
 
-		// hack!
-		if methodRef.Name() == "digit" {
-			_digit(frame.OperandStack(), methodRef.Descriptor())
-			return
-		}
-
 		panic("java.lang.NullPointerException")
 	}
 
@@ -42,7 +33,10 @@ func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
 		resolvedMethod.Class().GetPackageName() != currentClass.GetPackageName() &&
 		ref.Class() != currentClass &&
 		!ref.Class().IsSubClassOf(currentClass) {
-		panic("java.lang.IllegalAccessError")
+
+		if !(ref.Class().IsArray() && resolvedMethod.Name() == "clone") {
+			panic("java.lang.IllegalAccessError")
+		}
 	}
 
 	methodToBeInvoked := heap.LookupMethodInClass(ref.Class(),
@@ -77,19 +71,4 @@ func _println(stack *rtda.OperandStack, descriptor string) {
 		panic("println: " + descriptor)
 	}
 	stack.PopRef()
-}
-
-// hack!
-func _digit(stack *rtda.OperandStack, descriptor string) {
-	switch descriptor {
-	case "(II)I":
-		stack.PopInt() //radix 默认十进制不用管
-		stack.PopInt() //char1
-		char0 := stack.PopInt()
-		if char0 < '0' || char0 > '9' {
-			panic("digit fail!")
-		} else {
-			stack.PushInt(char0 - '0')
-		}
-	}
 }

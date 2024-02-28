@@ -1,15 +1,20 @@
 package heap
 
-import (
-	"MyJavaGolangBook/ch10/classfile"
-	"MyJavaGolangBook/ch10/classpath"
-	"fmt"
-)
+import "fmt"
+import "MyJavaGolangBook/ch10/classfile"
+import "MyJavaGolangBook/ch10/classpath"
 
+/*
+class names:
+  - primitive types: boolean, byte, int ...
+  - primitive arrays: [Z, [B, [I ...
+  - non-array classes: java/lang/Object ...
+  - array classes: [Ljava/lang/Object; ...
+*/
 type ClassLoader struct {
 	cp          *classpath.Classpath
 	verboseFlag bool
-	classMap    map[string]*Class
+	classMap    map[string]*Class // loaded classes
 }
 
 func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
@@ -18,6 +23,7 @@ func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
 		verboseFlag: verboseFlag,
 		classMap:    make(map[string]*Class),
 	}
+
 	loader.loadBasicClasses()
 	loader.loadPrimitiveClasses()
 	return loader
@@ -35,12 +41,13 @@ func (self *ClassLoader) loadBasicClasses() {
 
 func (self *ClassLoader) loadPrimitiveClasses() {
 	for primitiveType, _ := range primitiveTypes {
-		self.loadPrimitiveClass(primitiveType) // 找到基本类型 比如void int float 等
+		self.loadPrimitiveClass(primitiveType)
 	}
 }
+
 func (self *ClassLoader) loadPrimitiveClass(className string) {
 	class := &Class{
-		accessFlags: ACC_PUBLIC,
+		accessFlags: ACC_PUBLIC, // todo
 		name:        className,
 		loader:      self,
 		initStarted: true,
@@ -52,11 +59,12 @@ func (self *ClassLoader) loadPrimitiveClass(className string) {
 
 func (self *ClassLoader) LoadClass(name string) *Class {
 	if class, ok := self.classMap[name]; ok {
+		// already loaded
 		return class
 	}
 
 	var class *Class
-	if name[0] == '[' {
+	if name[0] == '[' { // array class
 		class = self.loadArrayClass(name)
 	} else {
 		class = self.loadNonArrayClass(name)
@@ -72,7 +80,7 @@ func (self *ClassLoader) LoadClass(name string) *Class {
 
 func (self *ClassLoader) loadArrayClass(name string) *Class {
 	class := &Class{
-		accessFlags: ACC_PUBLIC, //TODO:
+		accessFlags: ACC_PUBLIC, // todo
 		name:        name,
 		loader:      self,
 		initStarted: true,
@@ -90,9 +98,11 @@ func (self *ClassLoader) loadNonArrayClass(name string) *Class {
 	data, entry := self.readClass(name)
 	class := self.defineClass(data)
 	link(class)
+
 	if self.verboseFlag {
 		fmt.Printf("[Loaded %s from %s]\n", name, entry)
 	}
+
 	return class
 }
 
@@ -104,6 +114,7 @@ func (self *ClassLoader) readClass(name string) ([]byte, classpath.Entry) {
 	return data, entry
 }
 
+// jvms 5.3.5
 func (self *ClassLoader) defineClass(data []byte) *Class {
 	class := parseClass(data)
 	class.loader = self
@@ -116,18 +127,18 @@ func (self *ClassLoader) defineClass(data []byte) *Class {
 func parseClass(data []byte) *Class {
 	cf, err := classfile.Parse(data)
 	if err != nil {
+		//panic("java.lang.ClassFormatError")
 		panic(err)
 	}
 	return newClass(cf)
 }
 
+// jvms 5.4.3.1
 func resolveSuperClass(class *Class) {
-	// Object是一切class的基类
 	if class.name != "java/lang/Object" {
 		class.superClass = class.loader.LoadClass(class.superClassName)
 	}
 }
-
 func resolveInterfaces(class *Class) {
 	interfaceCount := len(class.interfaceNames)
 	if interfaceCount > 0 {
@@ -153,12 +164,12 @@ func prepare(class *Class) {
 	calcStaticFieldSlotIds(class)
 	allocAndInitStaticVars(class)
 }
+
 func calcInstanceFieldSlotIds(class *Class) {
 	slotId := uint(0)
 	if class.superClass != nil {
 		slotId = class.superClass.instanceSlotCount
 	}
-
 	for _, field := range class.fields {
 		if !field.IsStatic() {
 			field.slotId = slotId
@@ -168,7 +179,6 @@ func calcInstanceFieldSlotIds(class *Class) {
 			}
 		}
 	}
-
 	class.instanceSlotCount = slotId
 }
 
@@ -183,7 +193,6 @@ func calcStaticFieldSlotIds(class *Class) {
 			}
 		}
 	}
-
 	class.staticSlotCount = slotId
 }
 

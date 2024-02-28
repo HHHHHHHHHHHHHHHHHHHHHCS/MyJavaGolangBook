@@ -1,9 +1,7 @@
 package conversions
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
 
 // Convert float to double
 type F2D struct{ base.NoOperandsInstruction }

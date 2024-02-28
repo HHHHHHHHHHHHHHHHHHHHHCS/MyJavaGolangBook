@@ -1,9 +1,7 @@
 package conversions
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
 
 // Convert int to byte
 type I2B struct{ base.NoOperandsInstruction }

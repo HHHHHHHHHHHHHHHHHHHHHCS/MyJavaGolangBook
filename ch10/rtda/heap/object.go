@@ -2,10 +2,11 @@ package heap
 
 type Object struct {
 	class *Class
-	data  interface{}
+	data  interface{} // Slots for Object, []int32 for int[] ...
 	extra interface{}
 }
 
+// create normal (non-array) object
 func newObject(class *Class) *Object {
 	return &Object{
 		class: class,
@@ -13,19 +14,16 @@ func newObject(class *Class) *Object {
 	}
 }
 
-// getters
+// getters & setters
 func (self *Object) Class() *Class {
 	return self.class
 }
-
 func (self *Object) Fields() Slots {
 	return self.data.(Slots)
 }
-
 func (self *Object) Extra() interface{} {
 	return self.extra
 }
-
 func (self *Object) SetExtra(extra interface{}) {
 	self.extra = extra
 }
@@ -34,6 +32,7 @@ func (self *Object) IsInstanceOf(class *Class) bool {
 	return class.isAssignableFrom(self.class)
 }
 
+// reflection
 func (self *Object) GetRefVar(name, descriptor string) *Object {
 	field := self.class.getField(name, descriptor, false)
 	slots := self.data.(Slots)

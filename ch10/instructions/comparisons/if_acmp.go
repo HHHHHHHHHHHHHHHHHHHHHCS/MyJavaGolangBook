@@ -1,9 +1,7 @@
 package comparisons
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
 
 // Branch if reference comparison succeeds
 type IF_ACMPEQ struct{ base.BranchInstruction }

@@ -1,20 +1,17 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-	"MyJavaGolangBook/ch10/rtda/heap"
-	"reflect"
-)
+import "reflect"
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
+import "MyJavaGolangBook/ch10/rtda/heap"
 
-type ATHROW struct {
-	base.NoOperandsInstruction
-}
+// Throw exception or error
+type ATHROW struct{ base.NoOperandsInstruction }
 
 func (self *ATHROW) Execute(frame *rtda.Frame) {
 	ex := frame.OperandStack().PopRef()
 	if ex == nil {
-		panic("java.lang.NullPointException")
+		panic("java.lang.NullPointerException")
 	}
 
 	thread := frame.Thread()
@@ -28,12 +25,12 @@ func findAndGotoExceptionHandler(thread *rtda.Thread, ex *heap.Object) bool {
 		frame := thread.CurrentFrame()
 		pc := frame.NextPC() - 1
 
-		handlerPc := frame.Method().FindExceptionHandler(ex.Class(), pc)
-		if handlerPc > 0 {
+		handlerPC := frame.Method().FindExceptionHandler(ex.Class(), pc)
+		if handlerPC > 0 {
 			stack := frame.OperandStack()
 			stack.Clear()
 			stack.PushRef(ex)
-			frame.SetNextPC(handlerPc)
+			frame.SetNextPC(handlerPC)
 			return true
 		}
 
@@ -41,11 +38,11 @@ func findAndGotoExceptionHandler(thread *rtda.Thread, ex *heap.Object) bool {
 		if thread.IsStackEmpty() {
 			break
 		}
-
 	}
 	return false
 }
 
+// todo
 func handleUncaughtException(thread *rtda.Thread, ex *heap.Object) {
 	thread.ClearStack()
 

@@ -1,11 +1,7 @@
 package math
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-)
-
-//逻辑/算数 左右移动的区别  在于 符号位的 扩展
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
 
 // Shift left int
 type ISHL struct{ base.NoOperandsInstruction }

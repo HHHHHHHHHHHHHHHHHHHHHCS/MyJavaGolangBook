@@ -1,17 +1,17 @@
 package misc
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/native"
-	"MyJavaGolangBook/ch10/rtda"
-	"MyJavaGolangBook/ch10/rtda/heap"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/native"
+import "MyJavaGolangBook/ch10/rtda"
+import "MyJavaGolangBook/ch10/rtda/heap"
 
 func init() {
 	native.Register("sun/misc/VM", "initialize", "()V", initialize)
 }
 
-func initialize(frame *rtda.Frame) {
+// private static native void initialize();
+// ()V
+func initialize(frame *rtda.Frame) { // hack!
 	vmClass := frame.Method().Class()
 	savedProps := vmClass.GetRefVar("savedProps", "Ljava/util/Properties;")
 	key := heap.JString(vmClass.Loader(), "foo")

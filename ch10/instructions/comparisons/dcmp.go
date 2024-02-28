@@ -1,9 +1,7 @@
 package comparisons
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
 
 // Compare double
 type DCMPG struct{ base.NoOperandsInstruction }

@@ -1,9 +1,7 @@
 package math
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
 
 // Boolean XOR int
 type IXOR struct{ base.NoOperandsInstruction }

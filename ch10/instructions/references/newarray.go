@@ -1,12 +1,11 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-	"MyJavaGolangBook/ch10/rtda/heap"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
+import "MyJavaGolangBook/ch10/rtda/heap"
 
 const (
+	//Array Type  atype
 	AT_BOOLEAN = 4
 	AT_CHAR    = 5
 	AT_FLOAT   = 6
@@ -17,23 +16,23 @@ const (
 	AT_LONG    = 11
 )
 
+// Create new array
 type NEW_ARRAY struct {
 	atype uint8
 }
 
-func (self *NEW_ARRAY) FetchOperands(render *base.BytecodeReader) {
-	self.atype = render.ReadUint8()
+func (self *NEW_ARRAY) FetchOperands(reader *base.BytecodeReader) {
+	self.atype = reader.ReadUint8()
 }
-
 func (self *NEW_ARRAY) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	count := stack.PopInt()
 	if count < 0 {
-		panic("java.lang.NativeArraySizeException")
+		panic("java.lang.NegativeArraySizeException")
 	}
 
-	calssLoader := frame.Method().Class().Loader()
-	arrClass := getPrimitiveArrayClass(calssLoader, self.atype)
+	classLoader := frame.Method().Class().Loader()
+	arrClass := getPrimitiveArrayClass(classLoader, self.atype)
 	arr := arrClass.NewArray(uint(count))
 	stack.PushRef(arr)
 }

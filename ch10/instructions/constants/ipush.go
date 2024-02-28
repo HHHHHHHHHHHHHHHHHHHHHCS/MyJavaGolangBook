@@ -1,10 +1,9 @@
 package constants
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
 
+// Push byte
 type BIPUSH struct {
 	val int8
 }
@@ -12,12 +11,12 @@ type BIPUSH struct {
 func (self *BIPUSH) FetchOperands(reader *base.BytecodeReader) {
 	self.val = reader.ReadInt8()
 }
-
 func (self *BIPUSH) Execute(frame *rtda.Frame) {
 	i := int32(self.val)
 	frame.OperandStack().PushInt(i)
 }
 
+// Push short
 type SIPUSH struct {
 	val int16
 }

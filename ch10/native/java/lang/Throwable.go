@@ -1,10 +1,11 @@
 package lang
 
-import (
-	"MyJavaGolangBook/ch10/native"
-	"MyJavaGolangBook/ch10/rtda"
-	"MyJavaGolangBook/ch10/rtda/heap"
-)
+import "fmt"
+import "MyJavaGolangBook/ch10/native"
+import "MyJavaGolangBook/ch10/rtda"
+import "MyJavaGolangBook/ch10/rtda/heap"
+
+const jlThrowable = "java/lang/Throwable"
 
 type StackTraceElement struct {
 	fileName   string
@@ -13,11 +14,17 @@ type StackTraceElement struct {
 	lineNumber int
 }
 
-func init() {
-	native.Register("java/lang/Throwable", "fillInStackTrace",
-		"(I)Ljava/lang/Throwable;", fillInStackTrace)
+func (self *StackTraceElement) String() string {
+	return fmt.Sprintf("%s.%s(%s:%d)",
+		self.className, self.methodName, self.fileName, self.lineNumber)
 }
 
+func init() {
+	native.Register(jlThrowable, "fillInStackTrace", "(I)Ljava/lang/Throwable;", fillInStackTrace)
+}
+
+// private native Throwable fillInStackTrace(int dummy);
+// (I)Ljava/lang/Throwable;
 func fillInStackTrace(frame *rtda.Frame) {
 	this := frame.LocalVars().GetThis()
 	frame.OperandStack().PushRef(this)
@@ -27,7 +34,6 @@ func fillInStackTrace(frame *rtda.Frame) {
 }
 
 func createStackTraceElements(tObj *heap.Object, thread *rtda.Thread) []*StackTraceElement {
-	// 栈顶两帧正在执行 fillInStackTrace fillInStackTrace
 	skip := distanceToObject(tObj.Class()) + 2
 	frames := thread.GetFrames()[skip:]
 	stes := make([]*StackTraceElement, len(frames))
@@ -37,7 +43,6 @@ func createStackTraceElements(tObj *heap.Object, thread *rtda.Thread) []*StackTr
 	return stes
 }
 
-// 跳过异常的构造函数的帧数
 func distanceToObject(class *heap.Class) int {
 	distance := 0
 	for c := class.SuperClass(); c != nil; c = c.SuperClass() {

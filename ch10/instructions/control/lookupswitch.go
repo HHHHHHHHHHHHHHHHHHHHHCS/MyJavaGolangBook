@@ -1,10 +1,22 @@
 package control
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
 
+/*
+lookupswitch
+<0-3 byte pad>
+defaultbyte1
+defaultbyte2
+defaultbyte3
+defaultbyte4
+npairs1
+npairs2
+npairs3
+npairs4
+match-offset pairs...
+*/
+// Access jump table by key match and jump
 type LOOKUP_SWITCH struct {
 	defaultOffset int32
 	npairs        int32
@@ -19,10 +31,8 @@ func (self *LOOKUP_SWITCH) FetchOperands(reader *base.BytecodeReader) {
 }
 
 func (self *LOOKUP_SWITCH) Execute(frame *rtda.Frame) {
-	// 为什么是*2?  一个是key  一个是对应的value偏移
 	key := frame.OperandStack().PopInt()
 	for i := int32(0); i < self.npairs*2; i += 2 {
-
 		if self.matchOffsets[i] == key {
 			offset := self.matchOffsets[i+1]
 			base.Branch(frame, int(offset))

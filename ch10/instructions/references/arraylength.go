@@ -1,13 +1,10 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
 
-type ARRAY_LENGTH struct {
-	base.NoOperandsInstruction
-}
+// Get length of array
+type ARRAY_LENGTH struct{ base.NoOperandsInstruction }
 
 func (self *ARRAY_LENGTH) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

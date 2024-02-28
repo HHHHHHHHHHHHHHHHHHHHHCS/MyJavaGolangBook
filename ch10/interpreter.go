@@ -1,12 +1,10 @@
 package main
 
-import (
-	"MyJavaGolangBook/ch10/instructions"
-	"MyJavaGolangBook/ch10/rtda/heap"
-	"fmt"
-)
+import "fmt"
+import "MyJavaGolangBook/ch10/instructions"
 import "MyJavaGolangBook/ch10/instructions/base"
 import "MyJavaGolangBook/ch10/rtda"
+import "MyJavaGolangBook/ch10/rtda/heap"
 
 func interpret(method *heap.Method, logInst bool, args []string) {
 	thread := rtda.NewThread()
@@ -55,6 +53,7 @@ func loop(thread *rtda.Thread, logInst bool) {
 			logInstruction(frame, inst)
 		}
 
+		// execute
 		inst.Execute(frame)
 		if thread.IsStackEmpty() {
 			break
@@ -67,8 +66,7 @@ func logInstruction(frame *rtda.Frame, inst base.Instruction) {
 	className := method.Class().Name()
 	methodName := method.Name()
 	pc := frame.Thread().PC()
-	fmt.Printf("%v.%v() #%2d %T %v\n",
-		className, methodName, pc, inst, inst)
+	fmt.Printf("%v.%v() #%2d %T %v\n", className, methodName, pc, inst, inst)
 }
 
 func logFrames(thread *rtda.Thread) {
@@ -76,7 +74,8 @@ func logFrames(thread *rtda.Thread) {
 		frame := thread.PopFrame()
 		method := frame.Method()
 		className := method.Class().Name()
-		fmt.Printf(">> pc: %4d %v.%v%v \n",
-			frame.NextPC(), className, method.Name(), method.Descriptor())
+		lineNum := method.GetLineNumber(frame.NextPC())
+		fmt.Printf(">> line:%4d pc:%4d %v.%v%v \n",
+			lineNum, frame.NextPC(), className, method.Name(), method.Descriptor())
 	}
 }

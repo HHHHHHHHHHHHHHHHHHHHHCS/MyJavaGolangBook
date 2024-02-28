@@ -1,10 +1,26 @@
 package control
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
 
+/*
+tableswitch
+<0-3 byte pad>
+defaultbyte1
+defaultbyte2
+defaultbyte3
+defaultbyte4
+lowbyte1
+lowbyte2
+lowbyte3
+lowbyte4
+highbyte1
+highbyte2
+highbyte3
+highbyte4
+jump offsets...
+*/
+// Access jump table by index and jump
 type TABLE_SWITCH struct {
 	defaultOffset int32
 	low           int32
@@ -30,5 +46,6 @@ func (self *TABLE_SWITCH) Execute(frame *rtda.Frame) {
 	} else {
 		offset = int(self.defaultOffset)
 	}
+
 	base.Branch(frame, offset)
 }

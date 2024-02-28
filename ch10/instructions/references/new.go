@@ -1,20 +1,16 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-	"MyJavaGolangBook/ch10/rtda/heap"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
+import "MyJavaGolangBook/ch10/rtda/heap"
 
-type NEW struct {
-	base.Index16Instruction
-}
+// Create new object
+type NEW struct{ base.Index16Instruction }
 
 func (self *NEW) Execute(frame *rtda.Frame) {
 	cp := frame.Method().Class().ConstantPool()
 	classRef := cp.GetConstant(self.Index).(*heap.ClassRef)
 	class := classRef.ResolvedClass()
-
 	if !class.InitStarted() {
 		frame.RevertNextPC()
 		base.InitClass(frame.Thread(), class)

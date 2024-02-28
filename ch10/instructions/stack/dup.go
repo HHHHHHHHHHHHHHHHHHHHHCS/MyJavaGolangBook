@@ -1,16 +1,11 @@
 package stack
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
 
-type DUP struct {
-	base.NoOperandsInstruction
-}
+// Duplicate the top operand stack value
+type DUP struct{ base.NoOperandsInstruction }
 
-// bottom -> top
-// [...][c][b][a] -> [...][c][b][a][a]
 func (self *DUP) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	slot := stack.PopSlot()
@@ -18,9 +13,8 @@ func (self *DUP) Execute(frame *rtda.Frame) {
 	stack.PushSlot(slot)
 }
 
-type DUP_X1 struct {
-	base.NoOperandsInstruction
-}
+// Duplicate the top operand stack value and insert two values down
+type DUP_X1 struct{ base.NoOperandsInstruction }
 
 func (self *DUP_X1) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -31,12 +25,9 @@ func (self *DUP_X1) Execute(frame *rtda.Frame) {
 	stack.PushSlot(slot1)
 }
 
-type DUP_X2 struct {
-	base.NoOperandsInstruction
-}
+// Duplicate the top operand stack value and insert two or three values down
+type DUP_X2 struct{ base.NoOperandsInstruction }
 
-// bottom -> top
-// [...][c][b][a] -> [...][a][c][b][a]
 func (self *DUP_X2) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	slot1 := stack.PopSlot()
@@ -48,9 +39,8 @@ func (self *DUP_X2) Execute(frame *rtda.Frame) {
 	stack.PushSlot(slot1)
 }
 
-type DUP2 struct {
-	base.NoOperandsInstruction
-}
+// Duplicate the top one or two operand stack values
+type DUP2 struct{ base.NoOperandsInstruction }
 
 func (self *DUP2) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -62,9 +52,8 @@ func (self *DUP2) Execute(frame *rtda.Frame) {
 	stack.PushSlot(slot1)
 }
 
-type DUP2_X1 struct {
-	base.NoOperandsInstruction
-}
+// Duplicate the top one or two operand stack values and insert two or three values down
+type DUP2_X1 struct{ base.NoOperandsInstruction }
 
 func (self *DUP2_X1) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -78,12 +67,9 @@ func (self *DUP2_X1) Execute(frame *rtda.Frame) {
 	stack.PushSlot(slot1)
 }
 
-type DUP2_X2 struct {
-	base.NoOperandsInstruction
-}
+// Duplicate the top one or two operand stack values and insert two, three, or four values down
+type DUP2_X2 struct{ base.NoOperandsInstruction }
 
-// bottom -> top
-// [...][d][c][b][a] -> [...][b][a][d][c][b][a]
 func (self *DUP2_X2) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	slot1 := stack.PopSlot()

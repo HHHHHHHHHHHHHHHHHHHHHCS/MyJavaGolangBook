@@ -7,9 +7,9 @@ type Method struct {
 	maxStack        uint
 	maxLocals       uint
 	code            []byte
-	argSlotCount    uint
 	exceptionTable  ExceptionTable
 	lineNumberTable *classfile.LineNumberTableAttribute
+	argSlotCount    uint
 }
 
 func newMethods(class *Class, cfMethods []*classfile.MemberInfo) []*Method {
@@ -44,16 +44,6 @@ func (self *Method) copyAttributes(cfMethod *classfile.MemberInfo) {
 	}
 }
 
-func (self *Method) GetLineNumber(pc int) int {
-	if self.IsNative() {
-		return -2
-	}
-	if self.lineNumberTable == nil {
-		return -1
-	}
-	return self.lineNumberTable.GetLineNumber(pc)
-}
-
 func (self *Method) calcArgSlotCount(paramTypes []string) {
 	for _, paramType := range paramTypes {
 		self.argSlotCount++
@@ -61,39 +51,28 @@ func (self *Method) calcArgSlotCount(paramTypes []string) {
 			self.argSlotCount++
 		}
 	}
-
 	if !self.IsStatic() {
-		self.argSlotCount++
+		self.argSlotCount++ // `this` reference
 	}
 }
 
 func (self *Method) injectCodeAttribute(returnType string) {
-	self.maxStack = 4
+	self.maxStack = 4 // todo
 	self.maxLocals = self.argSlotCount
 	switch returnType[0] {
 	case 'V':
-		self.code = []byte{0xfe, 0xb1} //return
+		self.code = []byte{0xfe, 0xb1} // return
 	case 'L', '[':
-		self.code = []byte{0xfe, 0xb0} //areturn
+		self.code = []byte{0xfe, 0xb0} // areturn
 	case 'D':
-		self.code = []byte{0xfe, 0xaf} //dreturn
+		self.code = []byte{0xfe, 0xaf} // dreturn
 	case 'F':
-		self.code = []byte{0xfe, 0xae} //freturn
+		self.code = []byte{0xfe, 0xae} // freturn
 	case 'J':
-		self.code = []byte{0xfe, 0xad} //lreturn
-
+		self.code = []byte{0xfe, 0xad} // lreturn
 	default:
-		self.code = []byte{0xfe, 0xac} //ireturn
-
+		self.code = []byte{0xfe, 0xac} // ireturn
 	}
-}
-
-func (self *Method) FindExceptionHandler(exClass *Class, pc int) int {
-	handler := self.exceptionTable.findExceptionHandler(exClass, pc)
-	if handler != nil {
-		return handler.handlerPc
-	}
-	return -1
 }
 
 func (self *Method) IsSynchronized() bool {
@@ -119,14 +98,30 @@ func (self *Method) IsStrict() bool {
 func (self *Method) MaxStack() uint {
 	return self.maxStack
 }
-
 func (self *Method) MaxLocals() uint {
 	return self.maxLocals
 }
 func (self *Method) Code() []byte {
 	return self.code
 }
-
 func (self *Method) ArgSlotCount() uint {
 	return self.argSlotCount
+}
+
+func (self *Method) FindExceptionHandler(exClass *Class, pc int) int {
+	handler := self.exceptionTable.findExceptionHandler(exClass, pc)
+	if handler != nil {
+		return handler.handlerPc
+	}
+	return -1
+}
+
+func (self *Method) GetLineNumber(pc int) int {
+	if self.IsNative() {
+		return -2
+	}
+	if self.lineNumberTable == nil {
+		return -1
+	}
+	return self.lineNumberTable.GetLineNumber(pc)
 }

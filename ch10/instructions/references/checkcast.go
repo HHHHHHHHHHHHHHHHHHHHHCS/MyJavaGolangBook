@@ -1,14 +1,11 @@
 package references
 
-import (
-	"MyJavaGolangBook/ch10/instructions/base"
-	"MyJavaGolangBook/ch10/rtda"
-	"MyJavaGolangBook/ch10/rtda/heap"
-)
+import "MyJavaGolangBook/ch10/instructions/base"
+import "MyJavaGolangBook/ch10/rtda"
+import "MyJavaGolangBook/ch10/rtda/heap"
 
-type CHECK_CAST struct {
-	base.Index16Instruction
-}
+// Check whether object is of given type
+type CHECK_CAST struct{ base.Index16Instruction }
 
 func (self *CHECK_CAST) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
